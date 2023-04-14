@@ -3,6 +3,8 @@ package pl.coderslab.castme.Agent;
 import lombok.Getter;
 import lombok.Setter;
 import pl.coderslab.castme.Agency.Agency;
+import pl.coderslab.castme.User.User;
+import pl.coderslab.castme.UserRole.UserRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,14 +17,8 @@ public class Agent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
-    @NotBlank
-    private String phoneNumber;
-    @NotBlank
-    private String email;
+    @OneToOne
+    private User user;
     @ManyToOne
     @JoinColumn(name = "agency_id")
     private Agency agency;

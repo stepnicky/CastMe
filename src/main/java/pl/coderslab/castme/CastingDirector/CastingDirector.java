@@ -3,6 +3,7 @@ package pl.coderslab.castme.CastingDirector;
 import lombok.Getter;
 import lombok.Setter;
 import pl.coderslab.castme.Casting.Casting;
+import pl.coderslab.castme.User.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,11 +17,8 @@ public class CastingDirector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    @Email
-    private String email;
+    @OneToOne
+    private User user;
     @OneToMany
     @JoinColumn(name = "casting_director_id")
     private List<Casting> castings;

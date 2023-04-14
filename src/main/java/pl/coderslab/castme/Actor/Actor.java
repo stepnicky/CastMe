@@ -7,6 +7,7 @@ import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.Photo.Photo;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Skill.Skill;
+import pl.coderslab.castme.User.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -22,14 +23,8 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    @Size(min = 2)
-    private String firstName;
-    @NotBlank
-    @Size(min = 2)
-    private String lastName;
-    @Email
-    private String email;
+    @OneToOne
+    private User user;
     private String education;
     @ManyToOne
     private FeatureSet featureSet;
