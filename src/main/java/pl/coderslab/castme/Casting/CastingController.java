@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/casting")
+@RequestMapping("/director/casting")
 public class CastingController {
 
     private final CastingService castingService;
