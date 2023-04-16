@@ -2,6 +2,7 @@ package pl.coderslab.castme.Actor;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.Agency.Agency;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.Photo.Photo;
@@ -30,8 +31,9 @@ public class Actor {
     private FeatureSet featureSet;
     @ManyToMany
     private List<Skill> skills;
-    @ManyToMany
-    private List<Role> roles;
+    @OneToMany(mappedBy = "actor")
+    private List<ActorRole> actorRoles;
+
     @OneToMany(mappedBy = "actor")
     private List<Photo> photos;
     @ManyToOne
