@@ -18,7 +18,7 @@
         <form:errors path="title"/>
         Description: <form:textarea path="description" placeholder="description"/>
         <form:errors path="description"/>
-        Deadline: <form:input path="deadline" type="datetime-local"/>
+        Deadline: <form:input path="deadline" type="date"/>
         <form:errors path="deadline"/>
         <input type="submit" value="Add casting">
     </form:form>

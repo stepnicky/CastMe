@@ -10,7 +10,7 @@ import pl.coderslab.castme.Skill.SkillConverter;
 import pl.coderslab.castme.UserRole.UserRoleConverter;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -33,7 +33,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+                .addResourceLocations("/static/");
     }
 
     @Override

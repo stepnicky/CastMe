@@ -2,6 +2,8 @@ package pl.coderslab.castme.Casting;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CastingService {
 
@@ -20,5 +22,8 @@ public class CastingService {
     }
     public void updateCasting(Casting casting) {
         castingRepository.save(casting);
+    }
+    public List<Casting> getCastingsByCastingDirector(Long id) {
+        return castingRepository.getAllByCastingDirectorId(id);
     }
 }
