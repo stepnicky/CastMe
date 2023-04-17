@@ -15,11 +15,10 @@ public class CastingService {
     public void createCasting(Casting casting) {
         castingRepository.save(casting);
     }
-    public Casting getRecentCasting() {
-        return castingRepository.getFirstByOrderByIdDesc();
-    }
-
     public Casting getCastingById(Long id) {
         return castingRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+    public void updateCasting(Casting casting) {
+        castingRepository.save(casting);
     }
 }
