@@ -25,12 +25,18 @@ public class Casting {
     private String title;
     @NotBlank
     private String description;
-
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate createdOn;
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime deadline;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate deadline;
     @OneToMany
     @JoinColumn(name = "casting_id")
     private List<Role> roles;
     private boolean isActive;
+
+    @PrePersist
+    public void prePersist() {
+        createdOn = LocalDate.now();
+    }
 }
