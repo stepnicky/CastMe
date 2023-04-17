@@ -5,7 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import pl.coderslab.castme.CastingDirector.CastingDirector;
+import pl.coderslab.castme.CastingDirector.CastingDirectorService;
 import pl.coderslab.castme.UserRole.UserRole;
 import pl.coderslab.castme.UserRole.UserRoleService;
 
@@ -16,24 +17,20 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserRoleService userRoleService;
+    private final CastingDirectorService castingDirectorService;
 
-    public UserController(UserService userService, UserRoleService userRoleService) {
+    public UserController(UserService userService, UserRoleService userRoleService, CastingDirectorService castingDirectorService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
+        this.castingDirectorService = castingDirectorService;
     }
-
-//    @GetMapping("/login")
-//    public String loginForm(Model model) {
-//        model.addAttribute("user", new User());
-//        return "login-form";
-//    }
 
     @GetMapping("/register")
     public String registrationForm(Model model) {
         List<UserRole> userRoles = userRoleService.getAllUserRoles();
         model.addAttribute("user", new User());
         model.addAttribute("userRoles", userRoles);
-        return "registration-form";
+        return "user/registration-form";
     }
 
     @PostMapping("/register")
@@ -48,11 +45,16 @@ public class UserController {
         if(result.hasErrors()) {
             List<UserRole> userRoles = userRoleService.getAllUserRoles();
             model.addAttribute("userRoles", userRoles);
-            return "registration-form";
+            return "user/registration-form";
         }
         userService.saveUser(user);
+        if(user.getUserRole().getUserRole().equals("ROLE_CASTING_DIRECTOR")) {
+            CastingDirector castingDirector = new CastingDirector();
+            castingDirector.setUser(user);
+            castingDirectorService.addCastingDirector(castingDirector);
+        }
         model.addAttribute("successMessage", "User has been registered successfully");
         model.addAttribute("user", new User());
-        return "registration-form";
+        return "user/registration-form";
     }
 }

@@ -20,7 +20,7 @@ public class Role {
     private String description;
     @OneToOne
     private FeatureSet featureSet;
-    @OneToMany
+    @ManyToMany
     private List<Skill> skills;
 
 }

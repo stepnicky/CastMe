@@ -18,8 +18,9 @@
     <p>${casting.deadline}</p>
     <p>Roles: </p>
     <c:forEach var="role" items="${roles}">
-
+        <p>${role.title}</p>
+        <p>${role.description}</p>
     </c:forEach>
-    <a href="/role/add">Add role to a casting</a>
+    <a href="/director/casting/${casting.id}/role/add">Add role to a casting</a>
 </body>
 </html>

@@ -16,5 +16,4 @@ public class Skill {
     private Long id;
     @NotBlank
     private String name;
-    private String level;
 }
