@@ -20,4 +20,8 @@ public class SkillService {
     public Skill getSkillById(Long id) {
         return skillRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+
+    public void createNewSkill(Skill skill) {
+        skillRepository.save(skill);
+    }
 }

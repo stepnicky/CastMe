@@ -7,6 +7,7 @@ import pl.coderslab.castme.Agency.Agency;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.Photo.Photo;
 import pl.coderslab.castme.Role.Role;
+import pl.coderslab.castme.Selftape.Selftape;
 import pl.coderslab.castme.Skill.Skill;
 import pl.coderslab.castme.User.User;
 
@@ -29,13 +30,15 @@ public class Actor {
     private String education;
     @ManyToOne
     private FeatureSet featureSet;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Skill> skills;
     @OneToMany(mappedBy = "actor")
     private List<ActorRole> actorRoles;
 
     @OneToMany(mappedBy = "actor")
     private List<Photo> photos;
+    @OneToMany(mappedBy = "actor")
+    private List<Selftape> selftapes;
     @ManyToOne
     @JoinColumn(name = "agency_id")
     private Agency agency;

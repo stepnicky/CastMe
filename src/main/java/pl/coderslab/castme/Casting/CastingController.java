@@ -83,19 +83,20 @@ public class CastingController {
                                    @PathVariable Long castingId,
                                    Model model,
                                    @RequestParam String gender,
-                                   @RequestParam int height,
-                                   @RequestParam int weight,
+                                   @RequestParam String height,
                                    @RequestParam String hairColor,
                                    @RequestParam String hairLength,
                                    @RequestParam String eyeColor,
                                    @RequestParam String figure,
-                                   @RequestParam int age) {
+                                   @RequestParam int ageFrom,
+                                   @RequestParam int ageTo) {
         if(result.hasErrors()) {
             model.addAttribute("skills", skillService.getAllSkills());
             return "role/form";
         }
+        int age = (ageFrom + ageTo)/2;
         FeatureSet featureSet = new FeatureSet(
-                gender, height, weight, hairColor,
+                gender, height, hairColor,
                 hairLength, eyeColor, figure, age
         );
         featureSetService.createFeatureSet(featureSet);

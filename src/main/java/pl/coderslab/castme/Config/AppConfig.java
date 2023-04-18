@@ -6,16 +6,21 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import pl.coderslab.castme.Agency.AgencyConverter;
 import pl.coderslab.castme.Skill.SkillConverter;
 import pl.coderslab.castme.UserRole.UserRoleConverter;
 
 @Configuration
-//@EnableWebMvc
 public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getUserRoleConverter());
         registry.addConverter(getSkillConverter());
+        registry.addConverter(getAgencyConverter());
+    }
+    @Bean
+    public AgencyConverter getAgencyConverter() {
+        return new AgencyConverter();
     }
     @Bean
     public UserRoleConverter getUserRoleConverter() {

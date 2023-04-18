@@ -1,6 +1,8 @@
 package pl.coderslab.castme.Casting;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.castme.Actor.Actor;
+import pl.coderslab.castme.ActorRole.ActorRole;
 
 import java.util.List;
 
@@ -25,5 +27,8 @@ public class CastingService {
     }
     public List<Casting> getCastingsByCastingDirector(Long id) {
         return castingRepository.getAllByCastingDirectorId(id);
+    }
+    public List<Casting> getCastingsByActorId(Long id) {
+        return castingRepository.getByActorId(id);
     }
 }
