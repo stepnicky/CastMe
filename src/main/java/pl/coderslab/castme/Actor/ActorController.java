@@ -4,9 +4,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.castme.ActorRole.ActorRole;
+import pl.coderslab.castme.ActorRole.ActorRoleService;
 import pl.coderslab.castme.Agency.AgencyService;
+import pl.coderslab.castme.Casting.Casting;
+import pl.coderslab.castme.Casting.CastingService;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
+import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Skill.Skill;
 import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
@@ -22,15 +27,21 @@ public class ActorController {
     private final SkillService skillService;
     private final AgencyService agencyService;
     private final FeatureSetService featureSetService;
+    private final CastingService castingService;
+    private final ActorRoleService actorRoleService;
 
     public ActorController(ActorService actorService,
                            SkillService skillService,
                            AgencyService agencyService,
-                           FeatureSetService featureSetService) {
+                           FeatureSetService featureSetService,
+                           CastingService castingService,
+                           ActorRoleService actorRoleService) {
         this.actorService = actorService;
         this.skillService = skillService;
         this.agencyService = agencyService;
         this.featureSetService = featureSetService;
+        this.castingService = castingService;
+        this.actorRoleService = actorRoleService;
     }
 
     @GetMapping("")
@@ -41,6 +52,10 @@ public class ActorController {
             model.addAttribute("message", "Fill in your actor's profile!");
             return "redirect:/actor/profile/form";
         }
+        List<Casting> castings = castingService.getCastingsByActorId(actor.getId());
+        List<ActorRole> actorRoles = actorRoleService.getAllActorRolesByActor(actor);
+        model.addAttribute("castings", castings);
+        model.addAttribute("actorRoles", actorRoles);
         return "actor/dashboard";
     }
 
