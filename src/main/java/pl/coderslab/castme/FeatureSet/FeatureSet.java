@@ -16,8 +16,7 @@ public class FeatureSet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String gender;
-    private int height;
-    private int weight;
+    private String height;
     private String hairColor;
     private String hairLength;
     private String eyeColor;
@@ -25,8 +24,7 @@ public class FeatureSet {
     private int age;
 
     public FeatureSet(String gender,
-                      int height,
-                      int weight,
+                      String height,
                       String hairColor,
                       String hairLength,
                       String eyeColor,
@@ -34,7 +32,6 @@ public class FeatureSet {
                       int age) {
         this.gender = gender;
         this.height = height;
-        this.weight = weight;
         this.hairColor = hairColor;
         this.hairLength = hairLength;
         this.eyeColor = eyeColor;

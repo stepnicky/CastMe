@@ -3,6 +3,7 @@ package pl.coderslab.castme.Role;
 import lombok.Getter;
 import lombok.Setter;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
+import pl.coderslab.castme.Selftape.Selftape;
 import pl.coderslab.castme.Skill.Skill;
 
 import javax.persistence.*;
@@ -22,5 +23,6 @@ public class Role {
     private FeatureSet featureSet;
     @ManyToMany
     private List<Skill> skills;
-
+    @OneToMany(mappedBy = "role")
+    private List<Selftape> selftapes;
 }

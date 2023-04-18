@@ -19,7 +19,7 @@
     <form:input path="title"/><br/>
 
     <label>Description:</label>
-    <form:textarea path="description"/><br/>
+    <form:textarea path="description" cols="10" rows="25"/><br/>
 
     <h2>Feature Set:</h2>
 
@@ -31,13 +31,24 @@
     </select><br/>
 
     <label for="height">Height:</label>
-    <input type="number" id="height" name="height"/><br/>
-
-    <label for="weight">Weight:</label>
-    <input type="number" id="weight" name="weight"/><br/>
+    <select id="height" name="height">
+        <option value="short">Short</option>
+        <option value="medium">Medium</option>
+        <option value="tall">Tall</option>
+        <option value="">No difference</option>
+    </select><br/>
 
     <label for="hairColor">Hair Color:</label>
-    <input type="text" id="hairColor" name="hairColor"/><br/>
+    <select id="hairColor" name="hairColor">
+        <option value="blonde">Blonde</option>
+        <option value="ginger">Ginger</option>
+        <option value="brown">Brown</option>
+        <option value="black">Black</option>
+        <option value="grey">Grey</option>
+        <option value="white">White</option>
+        <option value="other">Other</option>
+        <option value="">No difference</option>
+    </select><br/>
 
     <label for="hairLength">Hair Length:</label>
     <select id="hairLength" name="hairLength">
@@ -45,17 +56,36 @@
         <option value="short">Short</option>
         <option value="medium">Medium</option>
         <option value="long">Long</option>
+        <option value="">No difference</option>
     </select><br/>
 
     <label for="eyeColor">Eye Color:</label>
-    <input type="text" id="eyeColor" name="eyeColor"/><br/>
+    <select id="eyeColor" name="eyeColor">
+        <option value="blue">Blue</option>
+        <option value="brown">Brown</option>
+        <option value="green">Green</option>
+        <option value="yellow">Yellow</option>
+        <option value="black">Black</option>
+        <option value="grey">Grey</option>
+        <option value="other">Other</option>
+        <option value="">No difference</option>
+    </select><br/>
 
     <label for="figure">Figure:</label>
-    <input type="text" id="figure" name="figure"/><br/>
+    <select id="figure" name="figure">
+        <option value="athletic">Athletic</option>
+        <option value="overweight">Overweight</option>
+        <option value="curvy">Curvy</option>
+        <option value="slim">Slim</option>
+        <option value="muscular">Muscular</option>
+        <option value="other">Other</option>
+        <option value="">No difference</option>
+    </select><br/>
 
-    <label for="age">Date of Birth:</label>
-    <input type="number" id="age" name="age"/><br/>
-
+    <label for="ageFrom">Age from: </label>
+    <input type="number" id="ageFrom" name="ageFrom"/><br/>
+    <label for="ageTo">To: </label>
+    <input type="number" id="ageTo" name="ageTo"/><br/>
     <h2>Skills:</h2>
     <form:select path="skills" items="${skills}" itemValue="id" itemLabel="name"/><br/>
     <input type="submit" value="Submit"/>
