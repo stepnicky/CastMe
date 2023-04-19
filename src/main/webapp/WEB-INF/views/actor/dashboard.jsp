@@ -38,8 +38,14 @@
                                     </tr>
                                     <tr class="d-flex">
                                         <td class="col-5">
-                                            <i class="fas fa-heart" aria-hidden="true"></i>
-                                            ${actorRole.status.equals("invited") ? "Hit like and take part" : "You like it"}
+                                            <c:if test="${actorRole.status.equals(\"accepted\")}">
+                                                <i data-id="${actorRole.id}" class="heart fas fa-heart" aria-hidden="true"></i>
+                                                <span>You like it!</span>
+                                            </c:if>
+                                            <c:if test="${actorRole.status.equals(\"invited\") || actorRole.status.equals(\"viewed\")}">
+                                                <i data-id="${actorRole.id}" class="heart far fa-heart" aria-hidden="true"></i>
+                                                <span>Hit heart and take part!</span>
+                                            </c:if>
                                         </td>
                                         <td class="col-5"></td>
                                         <td class="col-2"></td>
@@ -64,5 +70,6 @@
         </div>
     </div>
 </section>
+<script src="/js/like.js" type="module" defer></script>
 </body>
 </html>

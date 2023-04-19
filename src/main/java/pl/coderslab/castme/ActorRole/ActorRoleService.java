@@ -29,4 +29,12 @@ public class ActorRoleService {
         });
     }
 
+    public void updateActorRole(ActorRole actorRole) {
+        actorRoleRepository.save(actorRole);
+    }
+
+    public ActorRole getActorRoleById(Long id) {
+        return actorRoleRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
 }

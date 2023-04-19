@@ -183,6 +183,7 @@ margin: 0 auto !important;
 
 .notification-menu {
   position: absolute;
+  padding: 7px;
   width: 300px;
   list-style-type: none;
   right: 15px;
@@ -336,7 +337,7 @@ margin: 0 auto !important;
 /*------------------------------*/
 
 .nav {
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .dashboard-nowrap {

@@ -35,12 +35,14 @@
       <div class="d-flex justify-content-around">
         <div class="bell mr-3">
           <i class="fas fa-regular fa-bell mt-2"></i>
-          <span class="notif-num">
-            <small>${notifications.size()}</small>
-          </span>
+          <c:if test="${notifications.size() > 0}">
+            <span class="notif-num">
+              <small>${notifications.size()}</small>
+            </span>
+          </c:if>
           <ul class="notification-menu d-none">
             <c:forEach items="${notifications}" var="notification">
-              <li class="notification">
+              <li>
                 ${notification}
               </li>
               <hr/>
