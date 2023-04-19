@@ -28,7 +28,7 @@ public class CastingService {
     public List<Casting> getCastingsByCastingDirector(Long id) {
         return castingRepository.getAllByCastingDirectorId(id);
     }
-    public List<Casting> getCastingsByActorId(Long id) {
-        return castingRepository.getByActorId(id);
+    public List<Casting> getActiveCastingsByActorId(Long id) {
+        return castingRepository.getActiveByActorId(id);
     }
 }

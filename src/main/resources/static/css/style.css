@@ -162,6 +162,36 @@ margin: 0 auto !important;
   color: var(--link-color);
 }
 
+.notif-num {
+  background: var(--light-link-color);
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 6px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.bell {
+  position: relative;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.notification-menu {
+  position: absolute;
+  width: 300px;
+  list-style-type: none;
+  right: 15px;
+  background: var(--lighter-background-color);
+  z-index: 2;
+}
+
+
+
 /*------------------------------*/
 /*---- Slider section----*/
 /*------------------------------*/
