@@ -12,6 +12,7 @@
         rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="/js/notification.js" type="module" defer></script>
 </head>
 <body>
   <header class="page-header">
@@ -32,7 +33,20 @@
         </a>
       </sec:authorize>
       <div class="d-flex justify-content-around">
-        <div class="bell mr-3"><i class="fas fa-regular fa-bell mt-2"></i></div>
+        <div class="bell mr-3">
+          <i class="fas fa-regular fa-bell mt-2"></i>
+          <span class="notif-num">
+            <small>${notifications.size()}</small>
+          </span>
+          <ul class="notification-menu d-none">
+            <c:forEach items="${notifications}" var="notification">
+              <li class="notification">
+                ${notification}
+              </li>
+              <hr/>
+            </c:forEach>
+          </ul>
+        </div>
         <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
       </div>
     </nav>

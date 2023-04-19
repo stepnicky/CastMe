@@ -17,6 +17,7 @@ import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -49,11 +50,27 @@ public class ActorController {
         User user = customUser.getUser();
         Actor actor = actorService.getActorByUser(user);
         if (actor == null) {
-            model.addAttribute("message", "Fill in your actor's profile!");
+            model.addAttribute("message", "Complete your actor's profile!");
             return "redirect:/actor/profile/form";
         }
-        List<Casting> castings = castingService.getCastingsByActorId(actor.getId());
+        List<Casting> castings = castingService.getActiveCastingsByActorId(actor.getId());
         List<ActorRole> actorRoles = actorRoleService.getAllActorRolesByActor(actor);
+        List<String> notifications = new ArrayList<>();
+        for (Casting casting : castings) {
+            casting.getRoles().forEach(r -> {
+                actorRoles.forEach(ar -> {
+                    if (ar.getRole().equals(r) &&
+                            ar.getStatus().equals("invited")) {
+                        notifications.add(String.format(
+                                "You have been invited to an audition for the role of " +
+                                "<strong>%s</strong> in <strong>%s</strong>.",
+                                r.getTitle(), casting.getTitle()
+                        ));
+                    }
+                });
+            });
+        }
+        model.addAttribute("notifications", notifications);
         model.addAttribute("castings", castings);
         model.addAttribute("actorRoles", actorRoles);
         return "actor/dashboard";
@@ -81,7 +98,7 @@ public class ActorController {
                                      @AuthenticationPrincipal CurrentUser customUser) {
         User user = customUser.getUser();
         actor.setUser(user);
-        if(!newSkill.isBlank()) {
+        if (!newSkill.isBlank()) {
             Skill skill = new Skill();
             skill.setName(newSkill);
             skillService.createNewSkill(skill);
