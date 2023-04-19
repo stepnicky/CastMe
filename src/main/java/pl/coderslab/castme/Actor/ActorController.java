@@ -120,7 +120,6 @@ public class ActorController {
         return "redirect:/actor";
     }
     @PostMapping("/roles/viewed")
-    @ResponseBody
     public void markRolesAsViewed(@RequestBody Map<String, List<Long>> actorRolesIdMap) {
         List<Long> actorRolesIds = actorRolesIdMap.get("numbers");
         actorRolesIds.forEach(id -> {

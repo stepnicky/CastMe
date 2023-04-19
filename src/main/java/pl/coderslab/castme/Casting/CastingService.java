@@ -31,4 +31,8 @@ public class CastingService {
     public List<Casting> getActiveCastingsByActorId(Long id) {
         return castingRepository.getActiveByActorId(id);
     }
+
+    public Long countCastingStatuses(Long castingDirectorId, Long castingId, String status) {
+        return castingRepository.countStatuses(castingDirectorId, castingId, status);
+    }
 }
