@@ -336,9 +336,9 @@ margin: 0 auto !important;
 /*---- Dashboard ----*/
 /*------------------------------*/
 
-.nav {
-  height: 100vh;
-}
+/*.nav {*/
+/*  height: 100vh;*/
+/*}*/
 
 .dashboard-nowrap {
   flex-wrap: nowrap;
