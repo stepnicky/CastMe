@@ -12,6 +12,10 @@ public class UserRoleConverter implements Converter<String, UserRole> {
 
     @Override
     public UserRole convert(String source) {
-        return userRoleService.getUserRoleById(Long.parseLong(source));
+        try {
+            return userRoleService.getUserRoleById(Long.parseLong(source));
+        } catch (NumberFormatException ex) {
+            return null;
+        }
     }
 }
