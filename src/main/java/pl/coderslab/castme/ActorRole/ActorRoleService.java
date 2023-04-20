@@ -37,4 +37,8 @@ public class ActorRoleService {
         return actorRoleRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    public List<ActorRole> getActorRolesByStatus(String status) {
+        return actorRoleRepository.getAllByStatus(status);
+    }
+
 }
