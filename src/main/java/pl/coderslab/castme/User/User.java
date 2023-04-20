@@ -5,7 +5,9 @@ import lombok.Setter;
 import pl.coderslab.castme.UserRole.UserRole;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -21,10 +23,12 @@ public class User {
     private String lastName;
     @NotBlank
     private String phoneNumber;
+    @Email
     @NotBlank
     private String email;
     @NotBlank
     private String password;
+    @NotNull
     @OneToOne
     private UserRole userRole;
 }
