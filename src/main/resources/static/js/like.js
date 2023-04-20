@@ -4,7 +4,7 @@ hearts.forEach(heart => {
    heart.addEventListener("click", e => {
       const actorRoleId = e.target.dataset.id;
       if(e.target.classList.contains("far")) {
-         fetch("/actor/role/like", {
+         fetch("/actor-role/status/change", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ hearts.forEach(heart => {
          const message = "You like it!";
          e.target.nextElementSibling.innerHTML = message;
       } else {
-         fetch("/actor/role/like", {
+         fetch("/actor-role/status/change", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'

@@ -10,7 +10,7 @@ if(notifications.length > 0) {
             actorRolesIds.push(
                 Number(n.getAttribute("data-actorRoleId"))
             ));
-        fetch("/actor/roles/viewed", {
+        fetch("/actor-role/viewed", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

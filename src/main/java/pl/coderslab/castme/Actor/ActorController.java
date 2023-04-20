@@ -66,7 +66,8 @@ public class ActorController {
                     if (ar.getRole().equals(r) &&
                             ar.getStatus().equals("invited")) {
                         notifications.add(String.format(
-                                "<p class='message' data-actorRoleId='%s'>You have been invited to an audition for the role of " +
+                                "<p class='message' data-actorRoleId='%s' data-action='viewed'>" +
+                                "You have been invited to an audition for the role of " +
                                 "<strong>%s</strong> in <strong>%s</strong><p>",
                                 ar.getId(), r.getTitle(), casting.getTitle()
                         ));
@@ -118,22 +119,5 @@ public class ActorController {
         actor.setFeatureSet(featureSet);
         actorService.createActor(actor);
         return "redirect:/actor";
-    }
-    @PostMapping("/roles/viewed")
-    public void markRolesAsViewed(@RequestBody Map<String, List<Long>> actorRolesIdMap) {
-        List<Long> actorRolesIds = actorRolesIdMap.get("numbers");
-        actorRolesIds.forEach(id -> {
-            ActorRole actorRole = actorRoleService.getActorRoleById(id);
-            actorRole.setStatus("viewed");
-            actorRoleService.updateActorRole(actorRole);
-        });
-    }
-    @PostMapping("/role/like")
-    public void likeRole(@RequestBody Map<String, String> actorRoleData) {
-        Long id = Long.parseLong(actorRoleData.get("actorRoleId"));
-        String action = actorRoleData.get("action");
-        ActorRole actorRole = actorRoleService.getActorRoleById(id);
-        actorRole.setStatus(action);
-        actorRoleService.updateActorRole(actorRole);
     }
 }
