@@ -3,15 +3,21 @@ package pl.coderslab.castme.CastingDirector;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
 import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
+import pl.coderslab.castme.Role.Role;
+import pl.coderslab.castme.Role.RoleService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -23,13 +29,16 @@ public class CastingDirectorController {
 
     private final CastingService castingService;
     private final CastingDirectorService castingDirectorService;
+    private final RoleService roleService;
     private final ActorRoleService actorRoleService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
+                                     RoleService roleService,
                                      ActorRoleService actorRoleService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
+        this.roleService = roleService;
         this.actorRoleService = actorRoleService;
     }
 
@@ -63,5 +72,38 @@ public class CastingDirectorController {
         model.addAttribute("notifications", notifications);
         model.addAttribute("castings", castings);
         return "casting-director/dashboard";
+    }
+
+    @GetMapping("/casting/add")
+    public String addCastingForm(Model model) {
+        model.addAttribute("casting", new Casting());
+        model.addAttribute("title", "Add new casting");
+        return "casting/form";
+    }
+
+    @PostMapping("/casting/add")
+    public String addCasting(@Valid Casting casting,
+                             BindingResult result,
+                             @AuthenticationPrincipal CurrentUser customUser) {
+        if(result.hasErrors()) {
+            return "casting/form";
+        }
+        casting.setActive(true);
+        castingService.createCasting(casting);
+        User user = customUser.getUser();
+        CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(user);
+        List<Casting> directorsCastings = castingDirector.getCastings();
+        directorsCastings.add(casting);
+        castingDirector.setCastings(directorsCastings);
+        castingDirectorService.updateCastingDirector(castingDirector);
+        return String.format("redirect:/director/casting/details/%s", casting.getId());
+    }
+    @GetMapping("/casting/details/{id}")
+    public String castingDetails(@PathVariable Long id, Model model) {
+        Casting casting = castingService.getCastingById(id);
+        List<Role> roles = roleService.getAllRolesByCasting(id);
+        model.addAttribute("casting", casting);
+        model.addAttribute("roles", roles);
+        return "casting/details";
     }
 }
