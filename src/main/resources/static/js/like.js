@@ -23,7 +23,7 @@ hearts.forEach(heart => {
             headers: {
                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({actorRoleId: actorRoleId, action: "viewed"})
+            body: JSON.stringify({actorRoleId: actorRoleId, action: "viewedByActor"})
          }).then(res => res.json())
              .then(res => console.log(res))
              .catch(err => console.log(err));
