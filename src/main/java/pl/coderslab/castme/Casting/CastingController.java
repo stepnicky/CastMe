@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/director/casting")
+@RequestMapping("/casting")
 public class CastingController {
 
     private final CastingService castingService;
@@ -36,38 +36,9 @@ public class CastingController {
         this.castingDirectorService = castingDirectorService;
     }
 
-    @GetMapping("/add")
-    public String addCastingForm(Model model) {
-        model.addAttribute("casting", new Casting());
-        return "casting/form";
-    }
 
-    @PostMapping("/add")
-    public String addCasting(@Valid Casting casting,
-                             BindingResult result,
-                             @AuthenticationPrincipal CurrentUser customUser) {
-        if(result.hasErrors()) {
-            return "casting/form";
-        }
-        casting.setActive(true);
-        castingService.createCasting(casting);
-        User user = customUser.getUser();
-        CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(user);
-        List<Casting> directorsCastings = castingDirector.getCastings();
-        directorsCastings.add(casting);
-        castingDirector.setCastings(directorsCastings);
-        castingDirectorService.updateCastingDirector(castingDirector);
-        return String.format("redirect:/director/casting/details/%s", casting.getId());
-    }
 
-    @GetMapping("/details/{id}")
-    public String castingDetails(@PathVariable Long id, Model model) {
-        Casting casting = castingService.getCastingById(id);
-        List<Role> roles = roleService.getAllRolesByCasting(id);
-        model.addAttribute("casting", casting);
-        model.addAttribute("roles", roles);
-        return "casting/details";
-    }
+
 
     @GetMapping("/{castingId}/role/add")
     public String addRoleToCastingForm(@PathVariable Long castingId, Model model) {
