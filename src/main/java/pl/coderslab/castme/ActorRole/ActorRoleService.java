@@ -41,4 +41,11 @@ public class ActorRoleService {
         return actorRoleRepository.getAllByStatus(status);
     }
 
+    public ActorRole getActorRoleByActorIdAndRoleId(Long actorId, Long roleid) {
+        return actorRoleRepository.getByActorIdAndRoleId(actorId, roleid);
+    }
+
+    public void deleteActorRolesByRoleId(Long roleId) {
+        actorRoleRepository.deleteByRoleId(roleId);
+    }
 }

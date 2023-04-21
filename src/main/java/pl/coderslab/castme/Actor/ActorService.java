@@ -26,7 +26,7 @@ public class ActorService {
         actorRepository.save(actor);
     }
 
-    public List<Actor> getActorByRoleRequirements(Role role) {
+    public List<Actor> getActorsByRoleRequirements(Role role) {
         List<Actor> actors = actorDao.getByRoleRequirements(role);
         actors.removeIf(a -> !new HashSet<>(a.getSkills()).containsAll(role.getSkills()));
         return actors;

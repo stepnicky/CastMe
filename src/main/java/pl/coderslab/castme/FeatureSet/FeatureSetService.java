@@ -14,4 +14,13 @@ public class FeatureSetService {
     public void createFeatureSet(FeatureSet featureSet) {
         featureSetRepository.save(featureSet);
     }
+    public FeatureSet getFeatureSetByRoleId(Long roleId) {
+        return featureSetRepository.getByRoleId(roleId);
+    }
+    public void updateFeatureSet(FeatureSet featureSet) {
+        featureSetRepository.save(featureSet);
+    }
+    public FeatureSet getFeatureSetById(Long id) {
+        return featureSetRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
 }

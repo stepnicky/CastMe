@@ -11,7 +11,10 @@
                                 <h3 class="color-header text-uppercase">casting details</h3>
                             </div>
                             <div class="col d-flex justify-content-end mb-2 noPadding">
-                                <a href="director/casting/list" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Back to list</a>
+                                <a href="/director/casting/list"
+                                   class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">
+                                    Back to list
+                                </a>
                             </div>
                         </div>
 
