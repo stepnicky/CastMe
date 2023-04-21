@@ -31,4 +31,8 @@ public class RoleService {
         roleRepository.save(role);
         actorRoleService.createActorRole(actors, role);
     }
+
+    public Long countStatusByRole(Long roleId, String status) {
+        return roleRepository.countStatuses(roleId, status);
+    }
 }
