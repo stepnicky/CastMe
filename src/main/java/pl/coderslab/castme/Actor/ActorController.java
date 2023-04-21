@@ -98,7 +98,8 @@ public class ActorController {
                                      @RequestParam String hairLength,
                                      @RequestParam String eyeColor,
                                      @RequestParam String figure,
-                                     @RequestParam int age,
+                                     @RequestParam int ageFrom,
+                                     @RequestParam int ageTo,
                                      @RequestParam String newSkill,
                                      @AuthenticationPrincipal CurrentUser customUser) {
         User user = customUser.getUser();
@@ -113,7 +114,7 @@ public class ActorController {
         }
         FeatureSet featureSet = new FeatureSet(
                 gender, height, hairColor, hairLength,
-                eyeColor, figure, age
+                eyeColor, figure, ageFrom, ageTo
         );
         featureSetService.createFeatureSet(featureSet);
         actor.setFeatureSet(featureSet);

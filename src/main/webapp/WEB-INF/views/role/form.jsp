@@ -54,11 +54,19 @@
                                             <label for="gender">Gender: </label>
                                         </div>
                                         <div class="col-7">
-                                            <select id="gender" name="gender">
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                                <option value="Other">Other</option>
-                                                <option value="">No difference</option>
+                                            <select id="gender" name="gender" >
+                                                <option value="Male" <c:if test="${'Male' eq featureSet.gender}">selected</c:if>>
+                                                    Male
+                                                </option>
+                                                <option value="Female" <c:if test="${'Female' eq featureSet.gender}">selected</c:if>>
+                                                    Female
+                                                </option>
+                                                <option value="Other" <c:if test="${'Other' eq featureSet.gender}">selected</c:if>>
+                                                    Other
+                                                </option>
+                                                <option value="" <c:if test="${'' eq featureSet.gender}">selected</c:if>>
+                                                    No difference
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -68,10 +76,18 @@
                                         </div>
                                         <div class="col-7">
                                             <select id="height" name="height">
-                                                <option value="short">Short</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="tall">Tall</option>
-                                                <option value="">No difference</option>
+                                                <option value="short" <c:if test="${'short' eq featureSet.height}">selected</c:if>>
+                                                    Short
+                                                </option>
+                                                <option value="medium" <c:if test="${'medium' eq featureSet.height}">selected</c:if>>
+                                                    Medium
+                                                </option>
+                                                <option value="tall" <c:if test="${'tall' eq featureSet.height}">selected</c:if>>
+                                                    Tall
+                                                </option>
+                                                <option value="" <c:if test="${'' eq featureSet.height}">selected</c:if>>
+                                                    No difference
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -81,14 +97,30 @@
                                         </div>
                                         <div class="col-7">
                                             <select id="hairColor" name="hairColor">
-                                                <option value="blonde">Blonde</option>
-                                                <option value="ginger">Ginger</option>
-                                                <option value="brown">Brown</option>
-                                                <option value="black">Black</option>
-                                                <option value="grey">Grey</option>
-                                                <option value="white">White</option>
-                                                <option value="other">Other</option>
-                                                <option value="">No difference</option>
+                                                <option value="blonde" <c:if test="${'blonde' eq featureSet.hairColor}">selected</c:if>>
+                                                    Blonde
+                                                </option>
+                                                <option value="ginger" <c:if test="${'ginger' eq featureSet.hairColor}">selected</c:if>>
+                                                    Ginger
+                                                </option>
+                                                <option value="brown" <c:if test="${'brown' eq featureSet.hairColor}">selected</c:if>>
+                                                    Brown
+                                                </option>
+                                                <option value="black" <c:if test="${'black' eq featureSet.hairColor}">selected</c:if>>
+                                                    Black
+                                                </option>
+                                                <option value="grey" <c:if test="${'grey' eq featureSet.hairColor}">selected</c:if>>
+                                                    Grey
+                                                </option>
+                                                <option value="white" <c:if test="${'white' eq featureSet.hairColor}">selected</c:if>>
+                                                    White
+                                                </option>
+                                                <option value="other" <c:if test="${'other' eq featureSet.hairColor}">selected</c:if>>
+                                                    Other
+                                                </option>
+                                                <option value="" <c:if test="${'' eq featureSet.hairColor}">selected</c:if>>
+                                                    No difference
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -98,11 +130,21 @@
                                         </div>
                                         <div class="col-7">
                                             <select id="hairLength" name="hairLength">
-                                                <option value="short">Short</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="long">Long</option>
-                                                <option value="bald">Bald</option>
-                                                <option value="">No difference</option>
+                                                <option value="short" <c:if test="${'short' eq featureSet.hairLength}">selected</c:if>>
+                                                    Short
+                                                </option>
+                                                <option value="medium" <c:if test="${'medium' eq featureSet.hairLength}">selected</c:if>>
+                                                    Medium
+                                                </option>
+                                                <option value="long" <c:if test="${'long' eq featureSet.hairLength}">selected</c:if>>
+                                                    Long
+                                                </option>
+                                                <option value="bald" <c:if test="${'bald' eq featureSet.hairLength}">selected</c:if>>
+                                                    Bald
+                                                </option>
+                                                <option value="" <c:if test="${'' eq featureSet.hairLength}">selected</c:if>>
+                                                    No difference
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -112,14 +154,30 @@
                                         </div>
                                         <div class="col-7">
                                             <select id="eyeColor" name="eyeColor">
-                                                <option value="blue">Blue</option>
-                                                <option value="brown">Brown</option>
-                                                <option value="green">Green</option>
-                                                <option value="yellow">Yellow</option>
-                                                <option value="black">Black</option>
-                                                <option value="grey">Grey</option>
-                                                <option value="other">Other</option>
-                                                <option value="">No difference</option>
+                                                <option value="blue" <c:if test="${'blue' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Blue
+                                                </option>
+                                                <option value="brown" <c:if test="${'brown' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Brown
+                                                </option>
+                                                <option value="green" <c:if test="${'green' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Green
+                                                </option>
+                                                <option value="yellow" <c:if test="${'yellow' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Yellow
+                                                </option>
+                                                <option value="black" <c:if test="${'black' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Black
+                                                </option>
+                                                <option value="grey" <c:if test="${'grey' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Grey
+                                                </option>
+                                                <option value="other" <c:if test="${'other' eq featureSet.eyeColor}">selected</c:if>>
+                                                    Other
+                                                </option>
+                                                <option value="" <c:if test="${'' eq featureSet.eyeColor}">selected</c:if>>
+                                                    No difference
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -129,13 +187,27 @@
                                         </div>
                                         <div class="col-7">
                                             <select id="figure" name="figure">
-                                                <option value="athletic">Athletic</option>
-                                                <option value="overweight">Overweight</option>
-                                                <option value="curvy">Curvy</option>
-                                                <option value="slim">Slim</option>
-                                                <option value="muscular">Muscular</option>
-                                                <option value="other">Other</option>
-                                                <option value="">No difference</option>
+                                                <option value="athletic" <c:if test="${'athletic' eq featureSet.figure}">selected</c:if>>
+                                                    Athletic
+                                                </option>
+                                                <option value="overweight" <c:if test="${'overweight' eq featureSet.figure}">selected</c:if>>
+                                                    Overweight
+                                                </option>
+                                                <option value="curvy" <c:if test="${'curvy' eq featureSet.figure}">selected</c:if>>
+                                                    Curvy
+                                                </option>
+                                                <option value="slim" <c:if test="${'slim' eq featureSet.figure}">selected</c:if>>
+                                                    Slim
+                                                </option>
+                                                <option value="muscular" <c:if test="${'muscular' eq featureSet.figure}">selected</c:if>>
+                                                    Muscular
+                                                </option>
+                                                <option value="other" <c:if test="${'other' eq featureSet.figure}">selected</c:if>>
+                                                    Other
+                                                </option>
+                                                <option value="" <c:if test="${'' eq featureSet.figure}">selected</c:if>>
+                                                    No difference
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -144,7 +216,8 @@
                                             <label for="ageFrom">Age from: </label>
                                         </div>
                                         <div class="col-7">
-                                            <input type="number" id="ageFrom" name="ageFrom" class="age-input"/>
+                                            <input type="number" id="ageFrom" name="ageFrom"
+                                                   class="age-input" value="${featureSet.ageFrom}"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -152,7 +225,8 @@
                                             <label for="ageTo">to: </label>
                                         </div>
                                         <div class="col-7">
-                                            <input type="number" id="ageTo" name="ageTo" class="age-input"/>
+                                            <input type="number" id="ageTo" name="ageTo"
+                                                   class="age-input" value="${featureSet.ageTo}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -164,121 +238,8 @@
                                     </div>
                                 </div>
                             </div>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="gender">Gender:</label>--%>
-<%--                                    <select id="gender" name="gender">--%>
-<%--                                        <option value="Male">Male</option>--%>
-<%--                                        <option value="Female">Female</option>--%>
-<%--                                        <option value="Other">Other</option>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-2"></div>--%>
-
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <form:select path="skills" items="${skills}" itemValue="id" itemLabel="name"/>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="height">Height:</label>--%>
-<%--                                    <select id="height" name="height">--%>
-<%--                                        <option value="short">Short</option>--%>
-<%--                                        <option value="medium">Medium</option>--%>
-<%--                                        <option value="tall">Tall</option>--%>
-<%--                                        <option value="">No difference</option>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-2"></div>--%>
-
-<%--                                <div class="col-5 p-4">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="hairColor">Hair Color:</label>--%>
-<%--                                    <select id="hairColor" name="hairColor">--%>
-<%--                                        <option value="blonde">Blonde</option>--%>
-<%--                                        <option value="ginger">Ginger</option>--%>
-<%--                                        <option value="brown">Brown</option>--%>
-<%--                                        <option value="black">Black</option>--%>
-<%--                                        <option value="grey">Grey</option>--%>
-<%--                                        <option value="white">White</option>--%>
-<%--                                        <option value="other">Other</option>--%>
-<%--                                        <option value="">No difference</option>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-2"></div>--%>
-
-<%--                                <div class="col-5 p-4">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="hairLength">Hair Length:</label>--%>
-<%--                                    <select id="hairLength" name="hairLength">--%>
-<%--                                        <option value="short">Short</option>--%>
-<%--                                        <option value="medium">Medium</option>--%>
-<%--                                        <option value="long">Long</option>--%>
-<%--                                        <option value="bald">Bald</option>--%>
-<%--                                        <option value="">No difference</option>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-2"></div>--%>
-
-<%--                                <div class="col-5 p-4">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="eyeColor">Eye Color:</label>--%>
-<%--                                    <select id="eyeColor" name="eyeColor">--%>
-<%--                                        <option value="blue">Blue</option>--%>
-<%--                                        <option value="brown">Brown</option>--%>
-<%--                                        <option value="green">Green</option>--%>
-<%--                                        <option value="yellow">Yellow</option>--%>
-<%--                                        <option value="black">Black</option>--%>
-<%--                                        <option value="grey">Grey</option>--%>
-<%--                                        <option value="other">Other</option>--%>
-<%--                                        <option value="">No difference</option>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-2"></div>--%>
-
-<%--                                <div class="col-5 p-4">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="figure">Figure:</label>--%>
-<%--                                    <select id="figure" name="figure">--%>
-<%--                                        <option value="athletic">Athletic</option>--%>
-<%--                                        <option value="overweight">Overweight</option>--%>
-<%--                                        <option value="curvy">Curvy</option>--%>
-<%--                                        <option value="slim">Slim</option>--%>
-<%--                                        <option value="muscular">Muscular</option>--%>
-<%--                                        <option value="other">Other</option>--%>
-<%--                                        <option value="">No difference</option>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-2"></div>--%>
-
-<%--                                <div class="col-5 p-4">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="row d-flex">--%>
-<%--                                <div class="col-5 p-4">--%>
-<%--                                    <label for="ageFrom">Age from: </label>--%>
-<%--                                    <input type="number" id="ageFrom" name="ageFrom"/>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-5"><label for="ageTo">to: </label>--%>
-<%--                                    <input type="number" id="ageTo" name="ageTo"/></div>--%>
-
-<%--                                <div class="col-2 p-4">--%>
-
-<%--                                </div>--%>
-<%--                            </div>--%>
                         </div>
+                        <input type="hidden" name="featureSetId" value="${featureSet.id}"/>
                     </form:form>
                 </div>
             </div>

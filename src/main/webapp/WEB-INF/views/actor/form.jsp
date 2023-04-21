@@ -69,8 +69,10 @@
       <option value="muscular">Muscular</option>
       <option value="other">Other</option>
     </select><br/>
-    <label for="age">Age: </label>
-    <input type="number" id="age" name="age"/><br/>
+    <label for="ageFrom">Age from: </label>
+    <input type="number" id="ageFrom" name="ageFrom"/><br/>
+    <label for="ageTo">Age to: </label>
+    <input type="number" id="ageTo" name="ageTo"/><br/>
     <h2>Skills:</h2>
     <form:select path="skills" items="${skills}" itemValue="id" itemLabel="name"/><br/>
     <input type="text" name="newSkill" placeholder="Add new skill"/><br/>

@@ -19,21 +19,22 @@ public class ActorDao {
     public List<Actor> getByRoleRequirements(Role role) {
         Query query = entityManager.createQuery("select distinct a from Actor a " +
                 "join a.featureSet fs " +
-                "where fs.gender = :gender " +
+                "where fs.gender like concat('%', :gender, '%') " +
                 "and fs.figure like concat('%', :figure, '%') " +
                 "and fs.eyeColor like concat('%', :eyeColor, '%') " +
                 "and fs.hairColor like concat('%', :hairColor, '%') " +
                 "and fs.hairLength like concat('%', :hairLength, '%') " +
                 "and fs.height like concat('%', :height, '%') " +
-                "and fs.age > :age - 5 " +
-                "and fs.age < :age + 5");
+                "and fs.ageFrom >= :ageFrom " +
+                "and fs.ageTo <= :ageTo");
         query.setParameter("gender", role.getFeatureSet().getGender());
         query.setParameter("figure", role.getFeatureSet().getFigure());
         query.setParameter("eyeColor", role.getFeatureSet().getEyeColor());
         query.setParameter("hairColor", role.getFeatureSet().getHairColor());
         query.setParameter("hairLength", role.getFeatureSet().getHairLength());
         query.setParameter("height", role.getFeatureSet().getHeight());
-        query.setParameter("age", role.getFeatureSet().getAge());
+        query.setParameter("ageFrom", role.getFeatureSet().getAgeFrom());
+        query.setParameter("ageTo", role.getFeatureSet().getAgeTo());
         return (List<Actor>) query.getResultList();
     }
 }

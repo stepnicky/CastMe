@@ -21,7 +21,8 @@ public class FeatureSet {
     private String hairLength;
     private String eyeColor;
     private String figure;
-    private int age;
+    private int ageFrom;
+    private int ageTo;
 
     public FeatureSet(String gender,
                       String height,
@@ -29,13 +30,15 @@ public class FeatureSet {
                       String hairLength,
                       String eyeColor,
                       String figure,
-                      int age) {
+                      int ageFrom,
+                      int ageTo) {
         this.gender = gender;
         this.height = height;
         this.hairColor = hairColor;
         this.hairLength = hairLength;
         this.eyeColor = eyeColor;
         this.figure = figure;
-        this.age = age;
+        this.ageFrom = ageFrom;
+        this.ageTo = ageTo;
     }
 }

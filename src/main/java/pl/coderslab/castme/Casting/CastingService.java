@@ -3,6 +3,7 @@ package pl.coderslab.castme.Casting;
 import org.springframework.stereotype.Service;
 import pl.coderslab.castme.Actor.Actor;
 import pl.coderslab.castme.ActorRole.ActorRole;
+import pl.coderslab.castme.Role.Role;
 
 import java.util.List;
 
@@ -34,5 +35,10 @@ public class CastingService {
 
     public Long countCastingStatuses(Long castingDirectorId, Long castingId, String status) {
         return castingRepository.countStatuses(castingDirectorId, castingId, status);
+    }
+
+    public Casting getCastingByRoleId(Long roleId) {
+        Casting casting = castingRepository.getByRoleId(roleId);
+        return casting;
     }
 }

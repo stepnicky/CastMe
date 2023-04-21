@@ -126,7 +126,7 @@ public class CastingDirectorController {
         return "role/form";
     }
 
-    @PostMapping("/{castingId}/role/add")
+    @PostMapping("/casting/{castingId}/role/add")
     public String addRoleToCasting(@Valid Role role,
                                    BindingResult result,
                                    @PathVariable Long castingId,
@@ -143,10 +143,9 @@ public class CastingDirectorController {
             model.addAttribute("skills", skillService.getAllSkills());
             return "role/form";
         }
-        int age = (ageFrom + ageTo)/2;
         FeatureSet featureSet = new FeatureSet(
                 gender, height, hairColor,
-                hairLength, eyeColor, figure, age
+                hairLength, eyeColor, figure, ageFrom, ageTo
         );
         featureSetService.createFeatureSet(featureSet);
         role.setFeatureSet(featureSet);
@@ -157,5 +156,50 @@ public class CastingDirectorController {
         casting.setRoles(roles);
         castingService.updateCasting(casting);
         return String.format("redirect:/director/casting/details/%s", castingId);
+    }
+    @GetMapping("/role/{roleId}/edit")
+    public String editRoleForm(@PathVariable Long roleId, Model model) {
+        model.addAttribute("title", "Edit role");
+        model.addAttribute("role", roleService.getRoleById(roleId));
+        model.addAttribute("featureSet", featureSetService.getFeatureSetByRoleId(roleId));
+        model.addAttribute("skills", skillService.getAllSkills());
+        return "role/form";
+    }
+    @PostMapping("/role/{roleId}/edit")
+    public String editRole(@Valid Role role,
+                           BindingResult result,
+                           @PathVariable Long roleId,
+                           Model model,
+                           @RequestParam Long featureSetId,
+                           @RequestParam String gender,
+                           @RequestParam String height,
+                           @RequestParam String hairColor,
+                           @RequestParam String hairLength,
+                           @RequestParam String eyeColor,
+                           @RequestParam String figure,
+                           @RequestParam int ageFrom,
+                           @RequestParam int ageTo) {
+        if(result.hasErrors()) {
+            model.addAttribute("title", "Edit role");
+            model.addAttribute("role", roleService.getRoleById(roleId));
+            model.addAttribute("featureSet", featureSetService.getFeatureSetByRoleId(roleId));
+            model.addAttribute("skills", skillService.getAllSkills());
+            return "role/form";
+        }
+        role.setId(roleId);
+        FeatureSet featureSet = featureSetService.getFeatureSetById(featureSetId);
+        featureSet.setGender(gender);
+        featureSet.setHeight(height);
+        featureSet.setHairColor(hairColor);
+        featureSet.setHairLength(hairLength);
+        featureSet.setEyeColor(eyeColor);
+        featureSet.setFigure(figure);
+        featureSet.setAgeFrom(ageFrom);
+        featureSet.setAgeTo(ageTo);
+        featureSetService.updateFeatureSet(featureSet);
+        role.setFeatureSet(featureSet);
+        roleService.updateRole(role);
+        Casting casting = castingService.getCastingByRoleId(roleId);
+        return String.format("redirect:/director/casting/details/%s", casting.getId());
     }
 }

@@ -27,12 +27,23 @@ public class RoleService {
     }
 
     public void addNewRole(Role role) {
-        List<Actor> actors = actorService.getActorByRoleRequirements(role);
+        List<Actor> actors = actorService.getActorsByRoleRequirements(role);
         roleRepository.save(role);
         actorRoleService.createActorRole(actors, role);
     }
 
     public Long countStatusByRole(Long roleId, String status) {
         return roleRepository.countStatuses(roleId, status);
+    }
+
+    public Role getRoleById(Long id) {
+        return roleRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    public void updateRole(Role role) {
+        roleRepository.save(role);
+        actorRoleService.deleteActorRolesByRoleId(role.getId());
+        List<Actor> actors = actorService.getActorsByRoleRequirements(role);
+        actorRoleService.createActorRole(actors, role);
     }
 }
