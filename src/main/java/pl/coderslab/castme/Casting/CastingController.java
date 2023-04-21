@@ -35,49 +35,4 @@ public class CastingController {
         this.featureSetService = featureSetService;
         this.castingDirectorService = castingDirectorService;
     }
-
-
-
-
-
-    @GetMapping("/{castingId}/role/add")
-    public String addRoleToCastingForm(@PathVariable Long castingId, Model model) {
-        model.addAttribute("role", new Role());
-        model.addAttribute("featureSet", new FeatureSet());
-        model.addAttribute("skills", skillService.getAllSkills());
-        return "role/form";
-    }
-
-    @PostMapping("/{castingId}/role/add")
-    public String addRoleToCasting(@Valid Role role,
-                                   BindingResult result,
-                                   @PathVariable Long castingId,
-                                   Model model,
-                                   @RequestParam String gender,
-                                   @RequestParam String height,
-                                   @RequestParam String hairColor,
-                                   @RequestParam String hairLength,
-                                   @RequestParam String eyeColor,
-                                   @RequestParam String figure,
-                                   @RequestParam int ageFrom,
-                                   @RequestParam int ageTo) {
-        if(result.hasErrors()) {
-            model.addAttribute("skills", skillService.getAllSkills());
-            return "role/form";
-        }
-        int age = (ageFrom + ageTo)/2;
-        FeatureSet featureSet = new FeatureSet(
-                gender, height, hairColor,
-                hairLength, eyeColor, figure, age
-        );
-        featureSetService.createFeatureSet(featureSet);
-        role.setFeatureSet(featureSet);
-        roleService.addNewRole(role);
-        Casting casting = castingService.getCastingById(castingId);
-        List<Role> roles = casting.getRoles();
-        roles.add(role);
-        casting.setRoles(roles);
-        castingService.updateCasting(casting);
-        return String.format("redirect:/director/casting/details/%s", castingId);
-    }
 }

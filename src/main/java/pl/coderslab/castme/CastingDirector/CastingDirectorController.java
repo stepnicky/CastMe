@@ -4,16 +4,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
 import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
+import pl.coderslab.castme.FeatureSet.FeatureSet;
+import pl.coderslab.castme.FeatureSet.FeatureSetService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
+import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
@@ -31,15 +31,21 @@ public class CastingDirectorController {
     private final CastingDirectorService castingDirectorService;
     private final RoleService roleService;
     private final ActorRoleService actorRoleService;
+    private final FeatureSetService featureSetService;
+    private final SkillService skillService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
                                      RoleService roleService,
-                                     ActorRoleService actorRoleService) {
+                                     ActorRoleService actorRoleService,
+                                     FeatureSetService featureSetService,
+                                     SkillService skillService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
         this.roleService = roleService;
         this.actorRoleService = actorRoleService;
+        this.featureSetService = featureSetService;
+        this.skillService = skillService;
     }
 
     @GetMapping("")
@@ -105,5 +111,46 @@ public class CastingDirectorController {
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
         return "casting/details";
+    }
+    @GetMapping("/casting/{castingId}/role/add")
+    public String addRoleToCastingForm(@PathVariable Long castingId, Model model) {
+        model.addAttribute("title", "Add new role");
+        model.addAttribute("role", new Role());
+        model.addAttribute("featureSet", new FeatureSet());
+        model.addAttribute("skills", skillService.getAllSkills());
+        return "role/form";
+    }
+
+    @PostMapping("/{castingId}/role/add")
+    public String addRoleToCasting(@Valid Role role,
+                                   BindingResult result,
+                                   @PathVariable Long castingId,
+                                   Model model,
+                                   @RequestParam String gender,
+                                   @RequestParam String height,
+                                   @RequestParam String hairColor,
+                                   @RequestParam String hairLength,
+                                   @RequestParam String eyeColor,
+                                   @RequestParam String figure,
+                                   @RequestParam int ageFrom,
+                                   @RequestParam int ageTo) {
+        if(result.hasErrors()) {
+            model.addAttribute("skills", skillService.getAllSkills());
+            return "role/form";
+        }
+        int age = (ageFrom + ageTo)/2;
+        FeatureSet featureSet = new FeatureSet(
+                gender, height, hairColor,
+                hairLength, eyeColor, figure, age
+        );
+        featureSetService.createFeatureSet(featureSet);
+        role.setFeatureSet(featureSet);
+        roleService.addNewRole(role);
+        Casting casting = castingService.getCastingById(castingId);
+        List<Role> roles = casting.getRoles();
+        roles.add(role);
+        casting.setRoles(roles);
+        castingService.updateCasting(casting);
+        return String.format("redirect:/director/casting/details/%s", castingId);
     }
 }
