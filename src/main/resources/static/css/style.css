@@ -489,3 +489,12 @@ margin: 0 auto !important;
 .schedules-content-header {
   margin-bottom: 50px;
 }
+.skills {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+.age-input {
+  display: inline-block;
+  width: 126px;
+}
