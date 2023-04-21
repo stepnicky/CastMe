@@ -108,6 +108,11 @@ public class CastingDirectorController {
     public String castingDetails(@PathVariable Long id, Model model) {
         Casting casting = castingService.getCastingById(id);
         List<Role> roles = roleService.getAllRolesByCasting(id);
+        roles.forEach(r -> {
+            Long numOfLikes = roleService.countStatusByRole(r.getId(), "accepted");
+            numOfLikes += roleService.countStatusByRole(r.getId(), "viewedByCastingDirector");
+            model.addAttribute(String.format("numOfLikes%s", r.getId()), numOfLikes);
+        });
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
         return "casting/details";
