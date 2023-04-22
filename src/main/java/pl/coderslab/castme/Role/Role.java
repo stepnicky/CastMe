@@ -19,10 +19,10 @@ public class Role {
     private Long id;
     private String title;
     private String description;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private FeatureSet featureSet;
     @ManyToMany
     private List<Skill> skills;
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
     private List<Selftape> selftapes;
 }

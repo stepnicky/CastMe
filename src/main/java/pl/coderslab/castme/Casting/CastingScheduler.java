@@ -18,7 +18,6 @@ public class CastingScheduler {
     public void checkCastingDeadlines() {
         LocalDateTime now = LocalDateTime.now();
         List<Casting> castings = castingService.getAllActiveCastings();
-
         for (Casting casting : castings) {
             if (casting.getDeadline().isBefore(now.toLocalDate())) {
                 casting.setActive(false);

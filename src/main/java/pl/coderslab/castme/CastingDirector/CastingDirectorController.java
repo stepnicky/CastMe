@@ -117,7 +117,7 @@ public class CastingDirectorController {
     @GetMapping("/casting/{id}/details")
     public String castingDetails(@PathVariable Long id, Model model) {
         Casting casting = castingService.getCastingById(id);
-        List<Role> roles = roleService.getAllRolesByCasting(id);
+        List<Role> roles = roleService.getAllRolesByCastingId(id);
         roles.forEach(r -> {
             Long numOfLikes = roleService.countStatusByRole(r.getId(), "accepted");
             numOfLikes += roleService.countStatusByRole(r.getId(), "viewedByCastingDirector");
@@ -236,6 +236,7 @@ public class CastingDirectorController {
     public String deleteRole(@PathVariable Long roleId) {
         Casting casting = castingService.getCastingByRoleId(roleId);
         actorRoleService.deleteActorRolesByRoleId(roleId);
+        selftapeService.deleteSelftapesByRoleId(roleId);
         roleService.deleteRole(roleId);
         return String.format("redirect:/director/casting/%s/details", casting.getId());
     }
@@ -246,6 +247,23 @@ public class CastingDirectorController {
         List<Casting> castings = castingService.getActiveCastingsByCastingDirectorId(castingDirector.getId());
         model.addAttribute("castings", castings);
         return "casting/list";
-
+    }
+    @GetMapping("/casting/{castingId}/delete")
+    public String deleteCasting(@PathVariable Long castingId) {
+        List<Role> roles = roleService.getAllRolesByCastingId(castingId);
+        List<FeatureSet> featureSetsByCasting = new ArrayList<>();
+        for (Role role : roles) {
+            actorRoleService.deleteActorRolesByRoleId(role.getId());
+            skillService.deleteRolesSkillsByRoleId(role.getId());
+            selftapeService.deleteSelftapesByRoleId(role.getId());
+            FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(role.getId());
+            featureSetsByCasting.add(featureSet);
+        }
+        roleService.deleteRolesByCastingId(castingId);
+        for(FeatureSet featureSet : featureSetsByCasting) {
+            featureSetService.deleteFeatureSet(featureSet);
+        }
+        castingService.deleteCasting(castingId);
+        return "redirect:/director/casting/list";
     }
 }

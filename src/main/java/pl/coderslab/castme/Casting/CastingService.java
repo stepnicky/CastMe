@@ -43,4 +43,8 @@ public class CastingService {
     public Casting getCastingByRoleId(Long roleId) {
         return castingRepository.getByRoleId(roleId);
     }
+
+    public void deleteCasting(Long castingId) {
+        castingRepository.deleteById(castingId);
+    }
 }
