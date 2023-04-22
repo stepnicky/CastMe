@@ -26,8 +26,11 @@ public class CastingService {
     public void updateCasting(Casting casting) {
         castingRepository.save(casting);
     }
-    public List<Casting> getCastingsByCastingDirector(Long id) {
-        return castingRepository.getAllByCastingDirectorId(id);
+    public List<Casting> getActiveCastingsByCastingDirectorId(Long id) {
+        return castingRepository.getActiveByCastingDirectorId(id);
+    }
+    public List<Casting> getAllActiveCastings() {
+        return castingRepository.getAllActive();
     }
     public List<Casting> getActiveCastingsByActorId(Long id) {
         return castingRepository.getActiveByActorId(id);
@@ -39,5 +42,9 @@ public class CastingService {
 
     public Casting getCastingByRoleId(Long roleId) {
         return castingRepository.getByRoleId(roleId);
+    }
+
+    public void deleteCasting(Long castingId) {
+        castingRepository.deleteById(castingId);
     }
 }

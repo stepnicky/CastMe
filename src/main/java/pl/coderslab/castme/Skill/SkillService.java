@@ -28,4 +28,7 @@ public class SkillService {
     public List<Skill> getSkillsByRoleId(Long roleId) {
         return skillRepository.getByRoleId(roleId);
     }
+    public void deleteRolesSkillsByRoleId(Long roleId) {
+        skillRepository.deleteRolesSkillsByRoleId(roleId);
+    }
 }

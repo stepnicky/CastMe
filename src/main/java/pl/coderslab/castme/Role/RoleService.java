@@ -22,8 +22,8 @@ public class RoleService {
         this.actorRoleService = actorRoleService;
     }
 
-    public List<Role> getAllRolesByCasting(Long id) {
-        return roleRepository.getAllByCasting(id);
+    public List<Role> getAllRolesByCastingId(Long id) {
+        return roleRepository.getAllByCastingId(id);
     }
 
     public void addNewRole(Role role) {
@@ -50,4 +50,9 @@ public class RoleService {
     public void deleteRole(Long roleId) {
         roleRepository.deleteById(roleId);
     }
+
+    public void deleteRolesByCastingId(Long castingId) {
+        roleRepository.deleteByCastingId(castingId);
+    }
+
 }

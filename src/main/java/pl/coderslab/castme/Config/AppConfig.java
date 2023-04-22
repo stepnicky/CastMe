@@ -3,6 +3,7 @@ package pl.coderslab.castme.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -11,6 +12,7 @@ import pl.coderslab.castme.Skill.SkillConverter;
 import pl.coderslab.castme.UserRole.UserRoleConverter;
 
 @Configuration
+@EnableScheduling
 public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {

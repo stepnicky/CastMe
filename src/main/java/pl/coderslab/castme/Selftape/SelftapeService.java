@@ -16,4 +16,8 @@ public class SelftapeService {
     public List<Selftape> getSelftapesByRoleId(Long roleId) {
         return selftapeRepository.getByRoleId(roleId);
     }
+
+    public void deleteSelftapesByRoleId(Long roleId) {
+        selftapeRepository.deleteByRoleId(roleId);
+    }
 }

@@ -23,4 +23,7 @@ public class FeatureSetService {
     public FeatureSet getFeatureSetById(Long id) {
         return featureSetRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+    public void deleteFeatureSet(FeatureSet featureSet) {
+        featureSetRepository.delete(featureSet);
+    }
 }
