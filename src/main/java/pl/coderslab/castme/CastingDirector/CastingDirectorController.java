@@ -237,7 +237,9 @@ public class CastingDirectorController {
         Casting casting = castingService.getCastingByRoleId(roleId);
         actorRoleService.deleteActorRolesByRoleId(roleId);
         selftapeService.deleteSelftapesByRoleId(roleId);
+        FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
         roleService.deleteRole(roleId);
+        featureSetService.deleteFeatureSet(featureSet);
         return String.format("redirect:/director/casting/%s/details", casting.getId());
     }
     @GetMapping("/casting/list")
@@ -265,5 +267,29 @@ public class CastingDirectorController {
         }
         castingService.deleteCasting(castingId);
         return "redirect:/director/casting/list";
+    }
+    @GetMapping("/casting/{castingId}/edit")
+    public String editCastingForm(@PathVariable Long castingId, Model model) {
+        model.addAttribute("casting", castingService.getCastingById(castingId));
+        model.addAttribute("title", "Edit casting");
+        return "casting/form";
+    }
+    @PostMapping("/casting/{castingId}/edit")
+    public String editCasting(@Valid Casting casting,
+                              BindingResult result,
+                              @PathVariable Long castingId,
+                              Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Edit casting");
+            return "casting/form";
+        }
+        Casting castingById = castingService.getCastingById(castingId);
+        castingById.setTitle(casting.getTitle());
+        castingById.setDescription(casting.getDescription());
+        castingById.setDeadline(casting.getDeadline());
+        castingById.setActive(castingById.isActive());
+        castingById.setCreatedOn(castingById.getCreatedOn());
+        castingService.updateCasting(castingById);
+        return String.format("redirect:/director/casting/%s/details", castingId);
     }
 }
