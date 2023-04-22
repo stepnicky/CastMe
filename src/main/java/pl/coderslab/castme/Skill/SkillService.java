@@ -24,4 +24,8 @@ public class SkillService {
     public void createNewSkill(Skill skill) {
         skillRepository.save(skill);
     }
+
+    public List<Skill> getSkillsByRoleId(Long roleId) {
+        return skillRepository.getByRoleId(roleId);
+    }
 }

@@ -31,4 +31,8 @@ public class ActorService {
         actors.removeIf(a -> !new HashSet<>(a.getSkills()).containsAll(role.getSkills()));
         return actors;
     }
+
+    public List<Actor> getActorsByRoleStatus(Long roleId, String status) {
+        return actorRepository.getByRoleStatus(roleId, status);
+    }
 }

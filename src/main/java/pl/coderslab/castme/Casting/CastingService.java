@@ -38,7 +38,6 @@ public class CastingService {
     }
 
     public Casting getCastingByRoleId(Long roleId) {
-        Casting casting = castingRepository.getByRoleId(roleId);
-        return casting;
+        return castingRepository.getByRoleId(roleId);
     }
 }
