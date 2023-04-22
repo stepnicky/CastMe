@@ -232,4 +232,11 @@ public class CastingDirectorController {
         model.addAttribute("selftapes", selftapes);
         return "role/details";
     }
+    @GetMapping("/role/{roleId}/delete")
+    public String deleteRole(@PathVariable Long roleId) {
+        Casting casting = castingService.getCastingByRoleId(roleId);
+        actorRoleService.deleteActorRolesByRoleId(roleId);
+        roleService.deleteRole(roleId);
+        return String.format("redirect:/director/casting/%s/details", casting.getId());
+    }
 }
