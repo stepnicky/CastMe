@@ -46,4 +46,8 @@ public class RoleService {
         List<Actor> actors = actorService.getActorsByRoleRequirements(role);
         actorRoleService.createActorRole(actors, role);
     }
+
+    public void deleteRole(Long roleId) {
+        roleRepository.deleteById(roleId);
+    }
 }
