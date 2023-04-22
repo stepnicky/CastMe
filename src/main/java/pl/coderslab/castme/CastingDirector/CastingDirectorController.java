@@ -62,7 +62,7 @@ public class CastingDirectorController {
     public String dashboard(@AuthenticationPrincipal CurrentUser customUser, Model model) {
         User user = customUser.getUser();
         CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(user);
-        List<Casting> castings = castingService.getCastingsByCastingDirector(castingDirector.getId());
+        List<Casting> castings = castingService.getActiveCastingsByCastingDirectorId(castingDirector.getId());
         castings.forEach(c -> {
             Long numOfLikes = castingService.countCastingStatuses(castingDirector.getId(), c.getId(), "accepted");
             numOfLikes += castingService.countCastingStatuses(castingDirector.getId(), c.getId(), "viewedByCastingDirector");
@@ -238,5 +238,14 @@ public class CastingDirectorController {
         actorRoleService.deleteActorRolesByRoleId(roleId);
         roleService.deleteRole(roleId);
         return String.format("redirect:/director/casting/%s/details", casting.getId());
+    }
+    @GetMapping("/casting/list")
+    public String castingList(@AuthenticationPrincipal CurrentUser customUser, Model model) {
+        User user = customUser.getUser();
+        CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(user);
+        List<Casting> castings = castingService.getActiveCastingsByCastingDirectorId(castingDirector.getId());
+        model.addAttribute("castings", castings);
+        return "casting/list";
+
     }
 }
