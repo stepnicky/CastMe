@@ -184,8 +184,11 @@ margin: 0 auto !important;
   font-size: 24px;
   cursor: pointer;
 }
+.account {
+  cursor: pointer;
+}
 
-.notification-menu {
+.notification-menu, .account-menu {
   position: absolute;
   padding: 7px;
   width: 300px;
@@ -340,10 +343,9 @@ margin: 0 auto !important;
 /*---- Dashboard ----*/
 /*------------------------------*/
 
-/*.nav {*/
-/*  height: 100vh;*/
-/*}*/
-
+.left-nav {
+  height: 100vh;
+}
 .dashboard-nowrap {
   flex-wrap: nowrap;
   margin: 0;

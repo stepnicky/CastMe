@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<ul class="nav flex-column long-bg">
+<ul class="nav left-nav flex-column long-bg">
   <li class="nav-item">
     <sec:authorize access="hasRole('CASTING_DIRECTOR')">
       <a class="nav-link" href="/director/casting/add">
@@ -70,10 +70,4 @@
       </a>
     </sec:authorize>
   </li>
-<%--  <li class="nav-item">--%>
-<%--    <a class="nav-link" href="/super-admin-users.html">--%>
-<%--      <span>Użytkownicy</span>--%>
-<%--      <i class="fas fa-angle-right"></i>--%>
-<%--    </a>--%>
-<%--  </li>--%>
 </ul>

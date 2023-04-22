@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/agent/**").hasRole("AGENT")
                 .antMatchers("/director/**").hasRole("CASTING_DIRECTOR")
                 .antMatchers("/actor/**").hasRole("ACTOR")
+                .antMatchers("/user/**").hasAnyRole("AGENT", "CASTING_DIRECTOR", "ACTOR")
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated().and().csrf().disable().formLogin()
@@ -47,9 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/css/**", "/js/**", "/images/**");
+        web.ignoring()
+           .antMatchers("/css/**", "/js/**", "/images/**");
     }
 
 }
