@@ -111,6 +111,10 @@ width: 90% !important;
 margin: 0 auto !important;
 }
 
+.heart {
+  cursor: pointer;
+}
+
 /*------------------------------*/
 /*---- Paddings ----*/
 /*------------------------------*/

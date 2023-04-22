@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.castme.Actor.Actor;
+import pl.coderslab.castme.Actor.ActorService;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
 import pl.coderslab.castme.Casting.Casting;
@@ -13,6 +15,9 @@ import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
+import pl.coderslab.castme.Selftape.Selftape;
+import pl.coderslab.castme.Selftape.SelftapeService;
+import pl.coderslab.castme.Skill.Skill;
 import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
@@ -33,19 +38,24 @@ public class CastingDirectorController {
     private final ActorRoleService actorRoleService;
     private final FeatureSetService featureSetService;
     private final SkillService skillService;
+    private final ActorService actorService;
+    private final SelftapeService selftapeService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
                                      RoleService roleService,
                                      ActorRoleService actorRoleService,
                                      FeatureSetService featureSetService,
-                                     SkillService skillService) {
+                                     SkillService skillService,
+                                     ActorService actorService, SelftapeService selftapeService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
         this.roleService = roleService;
         this.actorRoleService = actorRoleService;
         this.featureSetService = featureSetService;
         this.skillService = skillService;
+        this.actorService = actorService;
+        this.selftapeService = selftapeService;
     }
 
     @GetMapping("")
@@ -102,9 +112,9 @@ public class CastingDirectorController {
         directorsCastings.add(casting);
         castingDirector.setCastings(directorsCastings);
         castingDirectorService.updateCastingDirector(castingDirector);
-        return String.format("redirect:/director/casting/details/%s", casting.getId());
+        return String.format("redirect:/director/casting/%s/details", casting.getId());
     }
-    @GetMapping("/casting/details/{id}")
+    @GetMapping("/casting/{id}/details")
     public String castingDetails(@PathVariable Long id, Model model) {
         Casting casting = castingService.getCastingById(id);
         List<Role> roles = roleService.getAllRolesByCasting(id);
@@ -155,7 +165,7 @@ public class CastingDirectorController {
         roles.add(role);
         casting.setRoles(roles);
         castingService.updateCasting(casting);
-        return String.format("redirect:/director/casting/details/%s", castingId);
+        return String.format("redirect:/director/casting/%s/details", castingId);
     }
     @GetMapping("/role/{roleId}/edit")
     public String editRoleForm(@PathVariable Long roleId, Model model) {
@@ -200,6 +210,26 @@ public class CastingDirectorController {
         role.setFeatureSet(featureSet);
         roleService.updateRole(role);
         Casting casting = castingService.getCastingByRoleId(roleId);
-        return String.format("redirect:/director/casting/details/%s", casting.getId());
+        return String.format("redirect:/director/casting/%s/details", casting.getId());
+    }
+    @GetMapping("/role/{roleId}/details")
+    public String roleDetails(@PathVariable Long roleId, Model model) {
+        Casting casting = castingService.getCastingByRoleId(roleId);
+        model.addAttribute("castingId", casting.getId());
+        Role role = roleService.getRoleById(roleId);
+        model.addAttribute("role", role);
+        Long numOfLikes = roleService.countStatusByRole(roleId, "accepted");
+        numOfLikes += roleService.countStatusByRole(roleId, "viewedByCastingDirector");
+        model.addAttribute("numOfLikes", numOfLikes);
+        FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
+        model.addAttribute("featureSet", featureSet);
+        List<Skill> skills = skillService.getSkillsByRoleId(roleId);
+        model.addAttribute("skills", skills);
+        List<Actor> actors = actorService.getActorsByRoleStatus(roleId, "accepted");
+        actors.addAll(actorService.getActorsByRoleStatus(roleId, "viewedByCastingDirector"));
+        model.addAttribute("actors", actors);
+        List<Selftape> selftapes = selftapeService.getSelftapesByRoleId(roleId);
+        model.addAttribute("selftapes", selftapes);
+        return "role/details";
     }
 }

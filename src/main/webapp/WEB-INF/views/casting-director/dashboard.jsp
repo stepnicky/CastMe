@@ -48,7 +48,7 @@
                                     ${pageContext.request.getAttribute(daysTillDeadline)}
                                 </td>
                                 <td class="col-5"></td>
-                                <td class="col-3"><a class="btn btn-primary" href="/director/casting/details/${casting.id}">Details</a></td>
+                                <td class="col-3"><a class="btn btn-primary" href="/director/casting/${casting.id}/details">Details</a></td>
                             </tr>
                         </tbody>
                     </table>
