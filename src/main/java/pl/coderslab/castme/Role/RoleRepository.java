@@ -20,4 +20,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Transactional
     @Query(value = "delete from roles where casting_id = ?1", nativeQuery = true)
     void deleteByCastingId(Long castingId);
+
+    @Query(value = "select r.* from roles r join actors_roles ar " +
+            "on r.id = ar.role_id where ar.actor_id = ?1", nativeQuery = true)
+    List<Role> getByActorId(Long actorId);
 }
