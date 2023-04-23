@@ -108,8 +108,10 @@ public class CastingDirectorController {
     @PostMapping("/casting/add")
     public String addCasting(@Valid Casting casting,
                              BindingResult result,
+                             Model model,
                              @AuthenticationPrincipal CurrentUser customUser) {
         if(result.hasErrors()) {
+            model.addAttribute("title", "Add new casting");
             return "casting/form";
         }
         casting.setActive(true);
@@ -157,6 +159,7 @@ public class CastingDirectorController {
                                    @RequestParam int ageFrom,
                                    @RequestParam int ageTo) {
         if(result.hasErrors()) {
+            model.addAttribute("title", "Add new role");
             model.addAttribute("skills", skillService.getAllSkills());
             return "role/form";
         }
@@ -298,5 +301,26 @@ public class CastingDirectorController {
         castingById.setCreatedOn(castingById.getCreatedOn());
         castingService.updateCasting(castingById);
         return String.format("redirect:/director/casting/%s/details", castingId);
+    }
+    @GetMapping("casting/archives")
+    public String archivesList(@AuthenticationPrincipal CurrentUser customUser,
+                               Model model) {
+        User user = customUser.getUser();
+        CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(user);
+        List<Casting> castings = castingService.getNonActiveCastingsByCastingDirectorId(castingDirector.getId());
+        model.addAttribute("castings", castings);
+        return "casting/archives";
+    }
+    @GetMapping("/casting/archives/{id}/details")
+    public String archiveDetails(@PathVariable Long id, Model model) {
+        Casting casting = castingService.getCastingById(id);
+        List<Role> roles = roleService.getAllRolesByCastingId(id);
+        roles.forEach(r -> {
+            Long numOfLikes = roleService.countStatusByRole(r.getId(), "liked");
+            model.addAttribute(String.format("numOfLikes%s", r.getId()), numOfLikes);
+        });
+        model.addAttribute("casting", casting);
+        model.addAttribute("roles", roles);
+        return "casting/archives-details";
     }
 }

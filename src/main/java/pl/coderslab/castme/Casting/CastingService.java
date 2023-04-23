@@ -20,20 +20,33 @@ public class CastingService {
     public void createCasting(Casting casting) {
         castingRepository.save(casting);
     }
+
     public Casting getCastingById(Long id) {
         return castingRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+
     public void updateCasting(Casting casting) {
         castingRepository.save(casting);
     }
+
     public List<Casting> getActiveCastingsByCastingDirectorId(Long id) {
         return castingRepository.getActiveByCastingDirectorId(id);
     }
+
+    public List<Casting> getNonActiveCastingsByCastingDirectorId(Long id) {
+        return castingRepository.getNonActiveByCastingDirectorId(id);
+    }
+
     public List<Casting> getAllActiveCastings() {
         return castingRepository.getAllActive();
     }
+
     public List<Casting> getActiveCastingsByActorId(Long id) {
         return castingRepository.getActiveByActorId(id);
+    }
+
+    public List<Casting> getNonActiveCastingsByActorId(Long id) {
+        return castingRepository.getNonActiveByActorId(id);
     }
 
     public Long countCastingStatuses(Long castingId, String status) {

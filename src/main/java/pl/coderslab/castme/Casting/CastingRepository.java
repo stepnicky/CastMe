@@ -14,10 +14,18 @@ public interface CastingRepository extends JpaRepository<Casting, Long> {
     @Query(value = "select * from castings where casting_director_id = ?1 and is_active = true", nativeQuery = true)
     List<Casting> getActiveByCastingDirectorId(Long id);
 
-    @Query( value = "select distinct c.* from castings c join roles r on c.id = r.casting_id " +
+    @Query(value = "select * from castings where casting_director_id = ?1 and is_active = false", nativeQuery = true)
+    List<Casting> getNonActiveByCastingDirectorId(Long id);
+
+    @Query(value = "select distinct c.* from castings c join roles r on c.id = r.casting_id " +
             "join actors_roles ar on r.id = ar.role_id join actors a on a.id = ar.actor_id " +
             "where a.id = ?1 and c.is_active = true", nativeQuery = true)
     List<Casting> getActiveByActorId(Long id);
+
+    @Query(value = "select distinct c.* from castings c join roles r on c.id = r.casting_id " +
+            "join actors_roles ar on r.id = ar.role_id join actors a on a.id = ar.actor_id " +
+            "where a.id = ?1 and c.is_active = false", nativeQuery = true)
+    List<Casting> getNonActiveByActorId(Long id);
 
     @Query(value = "select count(ars.actor_role_id) from actors_roles_statuses ars join statuses s on s.id = ars.status_id " +
             "join actors_roles ar on ar.id = ars.actor_role_id join roles r on r.id = ar.role_id" +
