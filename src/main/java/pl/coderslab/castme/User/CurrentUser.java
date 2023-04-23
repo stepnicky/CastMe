@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 public class CurrentUser extends User {
-    private final pl.coderslab.castme.User.User user;
+    private pl.coderslab.castme.User.User user;
     public CurrentUser(String username, String password,
                        Collection<? extends GrantedAuthority> authorities,
                        pl.coderslab.castme.User.User user) {
@@ -13,4 +13,7 @@ public class CurrentUser extends User {
         this.user = user;
     }
     public pl.coderslab.castme.User.User getUser() {return user;}
+    public void setUser(pl.coderslab.castme.User.User user) {
+        this.user = user;
+    }
 }

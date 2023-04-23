@@ -1,5 +1,6 @@
 package pl.coderslab.castme.User;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,5 +58,36 @@ public class UserController {
         model.addAttribute("successMessage", "User has been registered successfully");
         model.addAttribute("user", new User());
         return "user/registration-form";
+    }
+
+    @GetMapping("/user/account")
+    public String userAccount(@AuthenticationPrincipal CurrentUser customUser,
+                              Model model) {
+        model.addAttribute("user", customUser.getUser());
+        return "user/account";
+    }
+
+    @GetMapping("/user/account/edit")
+    public String editAccountForm(@AuthenticationPrincipal CurrentUser customUser,
+                                  Model model) {
+        model.addAttribute("user", customUser.getUser());
+        return "user/edit-form";
+    }
+
+    @PostMapping("/user/account/edit")
+    public String editAccount(@AuthenticationPrincipal CurrentUser customUser,
+                              @Valid User updatedUser,
+                              BindingResult result) {
+        if (result.hasErrors()) {
+            return "user/edit-form";
+        }
+        User currentUser = userService.findUserByEmail(customUser.getUsername());
+        currentUser.setFirstName(updatedUser.getFirstName());
+        currentUser.setLastName(updatedUser.getLastName());
+        currentUser.setEmail(updatedUser.getEmail());
+        currentUser.setPhoneNumber(updatedUser.getPhoneNumber());
+        userService.updateUser(currentUser);
+        customUser.setUser(currentUser);
+        return "redirect:/user/account";
     }
 }

@@ -54,7 +54,7 @@
           <i class="fas fa-user icon-user"></i>
           <ul class="account-menu d-none">
             <li>
-              <a href="/user/account">Account settings</a>
+              <a href="/user/account">My account</a>
               <hr/>
             </li>
             <li>
