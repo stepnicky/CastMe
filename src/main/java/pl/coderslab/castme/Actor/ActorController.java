@@ -181,4 +181,33 @@ public class ActorController {
         model.addAttribute("selftapes", selftapes);
         return "role/details";
     }
+
+    @GetMapping("casting/archives")
+    public String archivesList(@AuthenticationPrincipal CurrentUser customUser,
+                               Model model) {
+        User user = customUser.getUser();
+        Actor actor = actorService.getActorByUser(user);
+        List<Casting> castings = castingService.getNonActiveCastingsByActorId(actor.getId());
+        model.addAttribute("castings", castings);
+        return "casting/archives";
+    }
+
+    @GetMapping("/casting/archives/{id}/details")
+    public String archiveDetails(@PathVariable Long id,
+                                 @AuthenticationPrincipal CurrentUser customUser,
+                                 Model model) {
+        Casting casting = castingService.getCastingById(id);
+        List<Role> roles = roleService.getAllRolesByCastingId(id);
+        User user = customUser.getUser();
+        Actor actor = actorService.getActorByUser(user);
+        List<Role> rolesByActor = roleService.getRolesByActorId(actor.getId());
+        roles.retainAll(rolesByActor);
+        for (Role r : roles) {
+            Long numOfLikes = roleService.countStatusByRole(r.getId(), "liked");
+            model.addAttribute(String.format("numOfLikes%s", r.getId()), numOfLikes);
+        }
+        model.addAttribute("casting", casting);
+        model.addAttribute("roles", roles);
+        return "casting/archives-details";
+    }
 }

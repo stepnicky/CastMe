@@ -81,6 +81,3 @@
           crossorigin="anonymous"></script>
 </body>
 </html>
-
-</body>
-</html>
