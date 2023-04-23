@@ -3,9 +3,12 @@ package pl.coderslab.castme.ActorRole;
 import lombok.Getter;
 import lombok.Setter;
 import pl.coderslab.castme.Actor.Actor;
+import pl.coderslab.castme.ActorRoleStatus.Status;
 import pl.coderslab.castme.Role.Role;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "actors_roles")
@@ -19,5 +22,7 @@ public class ActorRole {
     private Actor actor;
     @ManyToOne
     private Role role;
-    private String status;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(inverseJoinColumns = @JoinColumn(name = "status_id"))
+    private Set<Status> statuses;
 }

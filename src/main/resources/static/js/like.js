@@ -4,12 +4,12 @@ hearts.forEach(heart => {
    heart.addEventListener("click", e => {
       const actorRoleId = e.target.dataset.id;
       if(e.target.classList.contains("far")) {
-         fetch("/actor-role/status/change", {
+         fetch("/actor-role/status/add", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({actorRoleId: actorRoleId, action: "accepted"})
+            body: JSON.stringify({actorRoleId: actorRoleId, status: "liked"})
          }).then(res => res.json())
          .then(res => console.log(res))
          .catch(err => console.log(err));
@@ -18,12 +18,12 @@ hearts.forEach(heart => {
          const message = "You like it!";
          e.target.nextElementSibling.innerHTML = message;
       } else {
-         fetch("/actor-role/status/change", {
+         fetch("/actor-role/status/delete", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({actorRoleId: actorRoleId, action: "viewedByActor"})
+            body: JSON.stringify({actorRoleId: actorRoleId, status: "liked"})
          }).then(res => res.json())
              .then(res => console.log(res))
              .catch(err => console.log(err));

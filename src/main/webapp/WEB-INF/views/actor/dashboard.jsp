@@ -38,13 +38,15 @@
                                     </tr>
                                     <tr class="d-flex">
                                         <td class="col-5">
-                                            <c:if test="${actorRole.status.equals(\"accepted\") ||
-                                            actorRole.status.equals(\"viewedByCastingDirector\")}">
+                                            <c:set var="found" value="${false}"/>
+                                            <c:forEach items="${actorRole.statuses}" var="status">
+                                            <c:if test="${status.name.equals(\"liked\")}">
                                                 <i data-id="${actorRole.id}" class="heart fas fa-heart" aria-hidden="true"></i>
                                                 <span>You like it!</span>
+                                                <c:set var="found" value="${true}"/>
                                             </c:if>
-                                            <c:if test="${actorRole.status.equals(\"invited\") ||
-                                             actorRole.status.equals(\"viewedByActor\")}">
+                                            </c:forEach>
+                                            <c:if test="${found == false}">
                                                 <i data-id="${actorRole.id}" class="heart far fa-heart" aria-hidden="true"></i>
                                                 <span>Hit heart and take part!</span>
                                             </c:if>

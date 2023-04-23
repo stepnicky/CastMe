@@ -12,8 +12,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Query(value = "select * from roles where casting_id = ?1", nativeQuery = true)
     List<Role> getAllByCastingId(Long id);
 
-    @Query(value = "select count(ar.status) from actors_roles ar " +
-            "join roles r on ar.role_id = r.id where r.id = ?1 and ar.status = ?2", nativeQuery = true)
+    @Query(value = "select count(ars.actor_role_id) from actors_roles_statuses ars join statuses s on s.id = ars.status_id " +
+            "join actors_roles ar on ar.id = ars.actor_role_id where ar.role_id = ?1 and s.name = ?2", nativeQuery = true)
     Long countStatuses(Long roleId, String status);
 
     @Modifying

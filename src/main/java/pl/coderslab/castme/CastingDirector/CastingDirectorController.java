@@ -9,6 +9,8 @@ import pl.coderslab.castme.Actor.Actor;
 import pl.coderslab.castme.Actor.ActorService;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
+import pl.coderslab.castme.ActorRoleStatus.Status;
+import pl.coderslab.castme.ActorRoleStatus.StatusService;
 import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
@@ -40,6 +42,7 @@ public class CastingDirectorController {
     private final SkillService skillService;
     private final ActorService actorService;
     private final SelftapeService selftapeService;
+    private final StatusService statusService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
@@ -47,7 +50,9 @@ public class CastingDirectorController {
                                      ActorRoleService actorRoleService,
                                      FeatureSetService featureSetService,
                                      SkillService skillService,
-                                     ActorService actorService, SelftapeService selftapeService) {
+                                     ActorService actorService,
+                                     SelftapeService selftapeService,
+                                     StatusService statusService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
         this.roleService = roleService;
@@ -56,6 +61,7 @@ public class CastingDirectorController {
         this.skillService = skillService;
         this.actorService = actorService;
         this.selftapeService = selftapeService;
+        this.statusService = statusService;
     }
 
     @GetMapping("")
@@ -64,17 +70,19 @@ public class CastingDirectorController {
         CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(user);
         List<Casting> castings = castingService.getActiveCastingsByCastingDirectorId(castingDirector.getId());
         castings.forEach(c -> {
-            Long numOfLikes = castingService.countCastingStatuses(castingDirector.getId(), c.getId(), "accepted");
-            numOfLikes += castingService.countCastingStatuses(castingDirector.getId(), c.getId(), "viewedByCastingDirector");
+            Long numOfLikes = castingService.countCastingStatuses( c.getId(), "liked");
             model.addAttribute(String.format("numOfLikes%s", c.getId()), numOfLikes);
-            Long numOfSelftapes = castingService.countCastingStatuses(castingDirector.getId(), c.getId(), "completed");
+            Long numOfSelftapes = castingService.countCastingStatuses(c.getId(), "completed");
             model.addAttribute(String.format("numOfSelftapes%s", c.getId()), numOfSelftapes);
             LocalDate now = LocalDate.now();
             LocalDate deadline = c.getDeadline();
             Integer daysTillDeadline = Period.between(now, deadline).getDays();
             model.addAttribute(String.format("daysTillDeadline%s", c.getId()), daysTillDeadline);
         });
-        List<ActorRole> actorRoles = actorRoleService.getActorRolesByStatus("accepted");
+        Status liked = statusService.getStatusByName("liked");
+        List<ActorRole> actorRoles = actorRoleService.getActorRolesByStatus(liked);
+        Status likeViewed = statusService.getStatusByName("likeViewedByCastingDirector");
+        actorRoles.removeIf(ar -> ar.getStatuses().contains(likeViewed));
         List<String> notifications = new ArrayList<>();
         actorRoles.forEach(ar -> {
             User actorUser = ar.getActor().getUser();
@@ -119,8 +127,7 @@ public class CastingDirectorController {
         Casting casting = castingService.getCastingById(id);
         List<Role> roles = roleService.getAllRolesByCastingId(id);
         roles.forEach(r -> {
-            Long numOfLikes = roleService.countStatusByRole(r.getId(), "accepted");
-            numOfLikes += roleService.countStatusByRole(r.getId(), "viewedByCastingDirector");
+            Long numOfLikes = roleService.countStatusByRole(r.getId(), "liked");
             model.addAttribute(String.format("numOfLikes%s", r.getId()), numOfLikes);
         });
         model.addAttribute("casting", casting);
@@ -218,15 +225,13 @@ public class CastingDirectorController {
         model.addAttribute("castingId", casting.getId());
         Role role = roleService.getRoleById(roleId);
         model.addAttribute("role", role);
-        Long numOfLikes = roleService.countStatusByRole(roleId, "accepted");
-        numOfLikes += roleService.countStatusByRole(roleId, "viewedByCastingDirector");
+        Long numOfLikes = roleService.countStatusByRole(roleId, "liked");
         model.addAttribute("numOfLikes", numOfLikes);
         FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
         model.addAttribute("featureSet", featureSet);
         List<Skill> skills = skillService.getSkillsByRoleId(roleId);
         model.addAttribute("skills", skills);
-        List<Actor> actors = actorService.getActorsByRoleStatus(roleId, "accepted");
-        actors.addAll(actorService.getActorsByRoleStatus(roleId, "viewedByCastingDirector"));
+        List<Actor> actors = actorService.getActorsByRoleStatus(roleId, "liked");
         model.addAttribute("actors", actors);
         List<Selftape> selftapes = selftapeService.getSelftapesByRoleId(roleId);
         model.addAttribute("selftapes", selftapes);
@@ -235,6 +240,7 @@ public class CastingDirectorController {
     @GetMapping("/role/{roleId}/delete")
     public String deleteRole(@PathVariable Long roleId) {
         Casting casting = castingService.getCastingByRoleId(roleId);
+        statusService.deleteActorRoleStatusByRoleId(roleId);
         actorRoleService.deleteActorRolesByRoleId(roleId);
         selftapeService.deleteSelftapesByRoleId(roleId);
         FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
@@ -255,6 +261,7 @@ public class CastingDirectorController {
         List<Role> roles = roleService.getAllRolesByCastingId(castingId);
         List<FeatureSet> featureSetsByCasting = new ArrayList<>();
         for (Role role : roles) {
+            statusService.deleteActorRoleStatusByRoleId(role.getId());
             actorRoleService.deleteActorRolesByRoleId(role.getId());
             skillService.deleteRolesSkillsByRoleId(role.getId());
             selftapeService.deleteSelftapesByRoleId(role.getId());
