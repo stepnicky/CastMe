@@ -13,6 +13,7 @@
   <link href="/css/style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <script src="/js/notification.js" type="module" defer></script>
+  <script src="/js/accountMenu.js" type="module" defer></script>
 </head>
 <body>
   <header class="page-header">
@@ -49,7 +50,18 @@
             </c:forEach>
           </ul>
         </div>
-        <div class="circle-div text-center"><i class="fas fa-user icon-user"></i></div>
+        <div class="account circle-div text-center">
+          <i class="fas fa-user icon-user"></i>
+          <ul class="account-menu d-none">
+            <li>
+              <a href="/user/account">My account</a>
+              <hr/>
+            </li>
+            <li>
+              <a href="/logout">Log out</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   </header>
