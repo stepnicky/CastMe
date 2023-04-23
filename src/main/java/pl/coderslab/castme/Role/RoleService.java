@@ -60,4 +60,8 @@ public class RoleService {
         roleRepository.deleteByCastingId(castingId);
     }
 
+    public List<Role> getRolesByActorId(Long actorId) {
+        return roleRepository.getByActorId(actorId);
+    }
+
 }
