@@ -10,7 +10,9 @@
               <h3 class="color-header text-uppercase">casting list</h3>
             </div>
             <div class="col d-flex justify-content-end mb-2 noPadding">
-              <a href="/director/casting/add" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Add new casting</a>
+              <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                <a href="/director/casting/add" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Add new casting</a>
+              </sec:authorize>
             </div>
           </div>
 
@@ -22,17 +24,24 @@
                     <td class="col-3">${casting.title}</td>
                     <td class="col-7">${casting.description}</td>
                     <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
-                      <a href="/director/casting/${casting.id}/edit" class="btn btn-warning rounded-0 text-light m-1">
-                        Edit
-                      </a>
-                      <a href="/director/casting/${casting.id}/delete"
-                         class="delete btn btn-danger rounded-0 text-light m-1"
-                         data-toggle="modal" data-target="#exampleModalCenter">
-                        Delete
-                      </a>
-                      <a href="/director/casting/${casting.id}/details" class="btn btn-info rounded-0 text-light m-1">
-                        Details
-                      </a>
+                      <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                        <a href="/director/casting/${casting.id}/edit" class="btn btn-warning rounded-0 text-light m-1">
+                          Edit
+                        </a>
+                        <a href="/director/casting/${casting.id}/delete"
+                           class="delete btn btn-danger rounded-0 text-light m-1"
+                           data-toggle="modal" data-target="#exampleModalCenter">
+                          Delete
+                        </a>
+                        <a href="/director/casting/${casting.id}/details" class="btn btn-info rounded-0 text-light m-1">
+                          Details
+                        </a>
+                      </sec:authorize>
+                      <sec:authorize access="hasRole('ACTOR')">
+                        <a href="/actor/casting/${casting.id}/details" class="btn btn-info rounded-0 text-light m-1">
+                          Details
+                        </a>
+                      </sec:authorize>
                     </td>
                   </tr>
                 </c:forEach>

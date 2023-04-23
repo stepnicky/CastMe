@@ -13,6 +13,8 @@ import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
+import pl.coderslab.castme.Role.Role;
+import pl.coderslab.castme.Role.RoleService;
 import pl.coderslab.castme.Skill.Skill;
 import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
@@ -33,6 +35,7 @@ public class ActorController {
     private final CastingService castingService;
     private final ActorRoleService actorRoleService;
     private final StatusService statusService;
+    private final RoleService roleService;
 
     public ActorController(ActorService actorService,
                            SkillService skillService,
@@ -40,7 +43,8 @@ public class ActorController {
                            FeatureSetService featureSetService,
                            CastingService castingService,
                            ActorRoleService actorRoleService,
-                           StatusService statusService) {
+                           StatusService statusService,
+                           RoleService roleService) {
         this.actorService = actorService;
         this.skillService = skillService;
         this.agencyService = agencyService;
@@ -48,6 +52,7 @@ public class ActorController {
         this.castingService = castingService;
         this.actorRoleService = actorRoleService;
         this.statusService = statusService;
+        this.roleService = roleService;
     }
 
     @GetMapping("")
@@ -124,4 +129,13 @@ public class ActorController {
         actorService.createActor(actor);
         return "redirect:/actor";
     }
+    @GetMapping("/casting/list")
+    public String castingDetails(@AuthenticationPrincipal CurrentUser customUser, Model model) {
+        User user = customUser.getUser();
+        Actor actor = actorService.getActorByUser(user);
+        List<Casting> castings = castingService.getActiveCastingsByActorId(actor.getId());
+        model.addAttribute("castings", castings);
+        return "casting/list";
+    }
+
 }
