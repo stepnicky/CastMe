@@ -61,7 +61,7 @@
                             <td class="col-4">Days until deadline: 8</td>
                             <td class="col-5"></td>
                             <td class="col-3">
-                                <a class="btn btn-primary" href="/actor/casting/details/${casting.id}">
+                                <a class="btn btn-primary" href="/actor/casting/${casting.id}/details">
                                     Details
                                 </a>
                             </td>

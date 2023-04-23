@@ -70,39 +70,48 @@
                                             ${pageContext.request.getAttribute(numOfLikes)}
                                         </td>
                                         <td class="col-2 center">
-                                            <a href="/director/role/${role.id}/edit"
-                                               class="btn btn-warning rounded-0 text-light m-1">
-                                                Edit
-                                            </a>
-                                            <a href="/director/role/${role.id}/delete"
-                                               class="delete btn btn-danger rounded-0 text-light m-1"
-                                               data-toggle="modal" data-target="#exampleModalCenter">
-                                                Delete
-                                            </a>
-                                            <a href="/director/role/${role.id}/details"
-                                               class="btn btn-info rounded-0 text-light m-1">
-                                                Details
-                                            </a>
-                                        </td>
+                                            <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                                                <a href="/director/role/${role.id}/edit"
+                                                   class="btn btn-warning rounded-0 text-light m-1">
+                                                    Edit
+                                                </a>
+                                                <a href="/director/role/${role.id}/delete"
+                                                   class="delete btn btn-danger rounded-0 text-light m-1"
+                                                   data-toggle="modal" data-target="#exampleModalCenter">
+                                                    Delete
+                                                </a>
+                                                <a href="/director/role/${role.id}/details"
+                                                   class="btn btn-info rounded-0 text-light m-1">
+                                                    Details
+                                                </a>
+                                            </sec:authorize>
+                                            <sec:authorize access="hasRole('ACTOR')">
+                                                <a href="/actor/role/${role.id}/details"
+                                                   class="btn btn-info rounded-0 text-light m-1">
+                                                    Details
+                                                </a>
+                                            </sec:authorize>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
-                            <table class="table">
-                                <thead>
-                                <tr class="d-flex">
-                                    <th class="col-2">
-                                        <a class="btn btn-primary rounded-0 text-light m-1"
-                                           href="/director/casting/${casting.id}/role/add">
-                                            Add new role
-                                        </a>
-                                    </th>
-                                    <th class="col-7"></th>
-                                    <th class="col-1"></th>
-                                    <th class="col-2"></th>
-                                </tr>
-                                </thead>
-                            </table>
+                            <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="d-flex">
+                                        <th class="col-2">
+                                            <a class="btn btn-primary rounded-0 text-light m-1"
+                                               href="/director/casting/${casting.id}/role/add">
+                                                Add new role
+                                            </a>
+                                        </th>
+                                        <th class="col-7"></th>
+                                        <th class="col-1"></th>
+                                        <th class="col-2"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </sec:authorize>
                         </div>
                     </div>
                 </div>

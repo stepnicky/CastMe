@@ -51,7 +51,7 @@
     </sec:authorize>
     <sec:authorize access="hasRole('ACTOR')">
       <a class="nav-link" href="/actor/casting/list">
-        <span>Casting list</span>
+        <span>Castings</span>
         <i class="fas fa-angle-right"></i>
       </a>
     </sec:authorize>
