@@ -15,6 +15,8 @@ import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
+import pl.coderslab.castme.Selftape.Selftape;
+import pl.coderslab.castme.Selftape.SelftapeService;
 import pl.coderslab.castme.Skill.Skill;
 import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
@@ -36,6 +38,7 @@ public class ActorController {
     private final ActorRoleService actorRoleService;
     private final StatusService statusService;
     private final RoleService roleService;
+    private final SelftapeService selftapeService;
 
     public ActorController(ActorService actorService,
                            SkillService skillService,
@@ -44,7 +47,8 @@ public class ActorController {
                            CastingService castingService,
                            ActorRoleService actorRoleService,
                            StatusService statusService,
-                           RoleService roleService) {
+                           RoleService roleService,
+                           SelftapeService selftapeService) {
         this.actorService = actorService;
         this.skillService = skillService;
         this.agencyService = agencyService;
@@ -53,6 +57,7 @@ public class ActorController {
         this.actorRoleService = actorRoleService;
         this.statusService = statusService;
         this.roleService = roleService;
+        this.selftapeService = selftapeService;
     }
 
     @GetMapping("")
@@ -131,7 +136,7 @@ public class ActorController {
     }
 
     @GetMapping("/casting/list")
-    public String castingDetails(@AuthenticationPrincipal CurrentUser customUser, Model model) {
+    public String castingList(@AuthenticationPrincipal CurrentUser customUser, Model model) {
         User user = customUser.getUser();
         Actor actor = actorService.getActorByUser(user);
         List<Casting> castings = castingService.getActiveCastingsByActorId(actor.getId());
@@ -156,5 +161,24 @@ public class ActorController {
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
         return "casting/details";
+    }
+
+    @GetMapping("/role/{roleId}/details")
+    public String roleDetails(@PathVariable Long roleId, Model model) {
+        Casting casting = castingService.getCastingByRoleId(roleId);
+        model.addAttribute("castingId", casting.getId());
+        Role role = roleService.getRoleById(roleId);
+        model.addAttribute("role", role);
+        Long numOfLikes = roleService.countStatusByRole(roleId, "liked");
+        model.addAttribute("numOfLikes", numOfLikes);
+        FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
+        model.addAttribute("featureSet", featureSet);
+        List<Skill> skills = skillService.getSkillsByRoleId(roleId);
+        model.addAttribute("skills", skills);
+        List<Actor> actors = actorService.getActorsByRoleStatus(roleId, "liked");
+        model.addAttribute("actors", actors);
+        List<Selftape> selftapes = selftapeService.getSelftapesByRoleId(roleId);
+        model.addAttribute("selftapes", selftapes);
+        return "role/details";
     }
 }
