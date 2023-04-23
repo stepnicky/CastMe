@@ -6,22 +6,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
+import pl.coderslab.castme.ActorRoleStatus.Status;
+import pl.coderslab.castme.ActorRoleStatus.StatusService;
 import pl.coderslab.castme.Agency.AgencyService;
 import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
-import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Skill.Skill;
 import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/actor")
@@ -34,19 +32,22 @@ public class ActorController {
     private final FeatureSetService featureSetService;
     private final CastingService castingService;
     private final ActorRoleService actorRoleService;
+    private final StatusService statusService;
 
     public ActorController(ActorService actorService,
                            SkillService skillService,
                            AgencyService agencyService,
                            FeatureSetService featureSetService,
                            CastingService castingService,
-                           ActorRoleService actorRoleService) {
+                           ActorRoleService actorRoleService,
+                           StatusService statusService) {
         this.actorService = actorService;
         this.skillService = skillService;
         this.agencyService = agencyService;
         this.featureSetService = featureSetService;
         this.castingService = castingService;
         this.actorRoleService = actorRoleService;
+        this.statusService = statusService;
     }
 
     @GetMapping("")
@@ -59,12 +60,14 @@ public class ActorController {
         }
         List<Casting> castings = castingService.getActiveCastingsByActorId(actor.getId());
         List<ActorRole> actorRoles = actorRoleService.getAllActorRolesByActor(actor);
+        Status invited = statusService.getStatusByName("invited");
         List<String> notifications = new ArrayList<>();
         for (Casting casting : castings) {
             casting.getRoles().forEach(r -> {
                 actorRoles.forEach(ar -> {
                     if (ar.getRole().equals(r) &&
-                            ar.getStatus().equals("invited")) {
+                            ar.getStatuses().size() == 1 &&
+                            ar.getStatuses().contains(invited)) {
                         notifications.add(String.format(
                                 "<p class='message' data-actorRoleId='%s' data-action='viewed'>" +
                                 "You have been invited to an audition for the role of " +
