@@ -20,4 +20,7 @@ public class SelftapeService {
     public void deleteSelftapesByRoleId(Long roleId) {
         selftapeRepository.deleteByRoleId(roleId);
     }
+    public void saveSelftape(Selftape selftape) {
+        selftapeRepository.save(selftape);
+    }
 }

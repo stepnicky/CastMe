@@ -29,9 +29,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/director")
+@SessionAttributes({"notifications"})
 public class CastingDirectorController {
 
     private final CastingService castingService;
@@ -80,15 +83,28 @@ public class CastingDirectorController {
             model.addAttribute(String.format("daysTillDeadline%s", c.getId()), daysTillDeadline);
         });
         Status liked = statusService.getStatusByName("liked");
-        List<ActorRole> actorRoles = actorRoleService.getActorRolesByStatus(liked);
+        List<ActorRole> likedActorRoles = actorRoleService.getActorRolesByStatus(liked);
         Status likeViewed = statusService.getStatusByName("likeViewedByCastingDirector");
-        actorRoles.removeIf(ar -> ar.getStatuses().contains(likeViewed));
+        likedActorRoles.removeIf(ar -> ar.getStatuses().contains(likeViewed));
         List<String> notifications = new ArrayList<>();
-        actorRoles.forEach(ar -> {
+        likedActorRoles.forEach(ar -> {
             User actorUser = ar.getActor().getUser();
             notifications.add(String.format(
                     "<p class='message' data-actorRoleId='%s'><strong>%s %s</strong> " +
                             "likes the role of %s<p>",
+                    ar.getId(), actorUser.getFirstName(),
+                    actorUser.getLastName(), ar.getRole().getTitle()
+            ));
+        });
+        Status completed = statusService.getStatusByName("completed");
+        List<ActorRole> completedActorRoles = actorRoleService.getActorRolesByStatus(completed);
+        Status selftapeViewed = statusService.getStatusByName("selftapeViewed");
+        completedActorRoles.removeIf(ar -> ar.getStatuses().contains(selftapeViewed));
+        completedActorRoles.forEach(ar -> {
+            User actorUser = ar.getActor().getUser();
+            notifications.add(String.format(
+                    "<p class='message' data-actorRoleId='%s'><strong>%s %s</strong> " +
+                            "has sent you a selftape for the role of %s<p>",
                     ar.getId(), actorUser.getFirstName(),
                     actorUser.getLastName(), ar.getRole().getTitle()
             ));
@@ -131,6 +147,8 @@ public class CastingDirectorController {
         roles.forEach(r -> {
             Long numOfLikes = roleService.countStatusByRole(r.getId(), "liked");
             model.addAttribute(String.format("numOfLikes%s", r.getId()), numOfLikes);
+            Long numOfSelftapes = roleService.countStatusByRole(r.getId(), "completed");
+            model.addAttribute(String.format("numOfSelftapes%s", r.getId()), numOfSelftapes);
         });
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
@@ -230,6 +248,8 @@ public class CastingDirectorController {
         model.addAttribute("role", role);
         Long numOfLikes = roleService.countStatusByRole(roleId, "liked");
         model.addAttribute("numOfLikes", numOfLikes);
+        Long numOfSelftapes = roleService.countStatusByRole(roleId, "completed");
+        model.addAttribute("numOfSelftapes", numOfSelftapes);
         FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
         model.addAttribute("featureSet", featureSet);
         List<Skill> skills = skillService.getSkillsByRoleId(roleId);
@@ -322,5 +342,16 @@ public class CastingDirectorController {
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
         return "casting/archives-details";
+    }
+    @PostMapping("/selftape/viewed")
+    public void markSelftapeAsViewed(@RequestBody Map<String, Long> requestBody) {
+        Long actorId = requestBody.get("actorId");
+        Long roleId = requestBody.get("roleId");
+        ActorRole actorRole = actorRoleService.getActorRoleByActorIdAndRoleId(actorId, roleId);
+        Set<Status> statuses = actorRole.getStatuses();
+        Status selftapeViewed = statusService.getStatusByName("selftapeViewed");
+        statuses.add(selftapeViewed);
+        actorRole.setStatuses(statuses);
+        actorRoleService.updateActorRole(actorRole);
     }
 }

@@ -25,6 +25,8 @@
                   <th scope="row" class="col-2">
                     <i class="fas fa-heart" aria-hidden="true"></i>
                     ${numOfLikes}
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                    ${numOfSelftapes}
                   </th>
                   <td class="col-7">
                   <td class="col-2">
@@ -72,7 +74,12 @@
                 <div class="col-2"></div>
                 <div class="col-5 border-bottom border-3">
                   <h3 class="text-uppercase">
-                    Selftapes
+                    <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                      Selftapes
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ACTOR')">
+                      Upload link to you selftape
+                    </sec:authorize>
                   </h3>
                 </div>
               </div>
@@ -83,11 +90,27 @@
                   </c:forEach>
                 </ul>
                 <div class="col-2"></div>
-                <ul class="col-5 p-4 list-unstyled">
-                  <c:forEach var="selftape" items="${selftapes}">
-                    <li>${selftape.actor.user.firstName} ${selftape.actor.user.lastName}</li>
-                  </c:forEach>
-                </ul>
+                <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                  <ul class="col-5 p-4 list-unstyled">
+                      <c:forEach var="selftape" items="${selftapes}">
+                        <li>
+                          <a class="selftape-link btn" data-actorId="${selftape.actor.id}"
+                             data-roleId="${selftape.role.id}" href="<c:url value="${selftape.link}"/>">
+                            ${selftape.actor.user.firstName} ${selftape.actor.user.lastName}
+                          </a>
+                        </li>
+                      </c:forEach>
+                  </ul>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ACTOR')">
+                  <form class="col-5 p-4" method="post" action="/actor/selftape/add">
+                    <div class="row form-group">
+                      <input type="hidden" name="roleId" value="${role.id}"/>
+                      <input type="text" name="link" placeholder=" Paste your link here"/>
+                      <button type="submit" class="btn btn-color rounded-0 ml-1 pt-0 pb-0 pr-2 pl-2">Upload</button>
+                    </div>
+                  </form>
+                </sec:authorize>
               </div>
             </div>
           </div>
