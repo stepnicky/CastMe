@@ -66,7 +66,6 @@ public class ActorController {
         User user = customUser.getUser();
         Actor actor = actorService.getActorByUser(user);
         if (actor == null) {
-            model.addAttribute("message", "Complete your actor's profile!");
             return "redirect:/actor/profile/form";
         }
         List<Casting> castings = castingService.getActiveCastingsByActorId(actor.getId());
@@ -96,11 +95,11 @@ public class ActorController {
     }
 
     @GetMapping("/profile/form")
-    public String profileForm(Model model,
-                              @ModelAttribute("message") String message) {
+    public String profileForm(Model model) {
         model.addAttribute("actor", new Actor());
         model.addAttribute("skills", skillService.getAllSkills());
         model.addAttribute("agencies", agencyService.getAllAgencies());
+        model.addAttribute("title", "Complete your actor's profile");
         return "actor/form";
     }
 

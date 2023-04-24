@@ -23,9 +23,9 @@
                 </tr>
                 <tr class="d-flex">
                   <th scope="row" class="col-2">
-                    <i class="fas fa-heart" aria-hidden="true"></i>
+                    <i class="fas fa-heart"></i>
                     ${numOfLikes}
-                    <i class="fas fa-check" aria-hidden="true"></i>
+                    <i class="fas fa-check"></i>
                     ${numOfSelftapes}
                   </th>
                   <td class="col-7">
