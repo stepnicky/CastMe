@@ -26,4 +26,7 @@ public class FeatureSetService {
     public void deleteFeatureSet(FeatureSet featureSet) {
         featureSetRepository.delete(featureSet);
     }
+    public FeatureSet getFeatureSetByActorId(Long actorId) {
+        return featureSetRepository.getByActorId(actorId);
+    }
 }

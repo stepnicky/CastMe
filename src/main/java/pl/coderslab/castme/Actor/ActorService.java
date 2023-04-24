@@ -39,4 +39,8 @@ public class ActorService {
     public List<Actor> getActorsByCastingDirectorId(Long id) {
         return actorRepository.getByCastingDirectorId(id);
     }
+
+    public void updateActor(Actor actor) {
+        actorRepository.save(actor);
+    }
 }

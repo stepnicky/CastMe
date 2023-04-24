@@ -3,6 +3,7 @@ package pl.coderslab.castme.Actor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
@@ -22,6 +23,7 @@ import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -134,6 +136,68 @@ public class ActorController {
         actorService.createActor(actor);
         return "redirect:/actor";
     }
+
+    @GetMapping("/my-profile")
+    public String myProfile(@AuthenticationPrincipal CurrentUser customUser,
+                          Model model) {
+        User user = customUser.getUser();
+        Actor actor = actorService.getActorByUser(user);
+        model.addAttribute("actor", actor);
+        return "actor/profile";
+    }
+
+    @GetMapping("/my-profile/edit")
+    public String editMyProfileForm(@AuthenticationPrincipal CurrentUser customUser,
+                                Model model) {
+        Actor actor = actorService.getActorByUser(customUser.getUser());
+        model.addAttribute("actor", actor);
+        FeatureSet featureSet = featureSetService.getFeatureSetByActorId(actor.getId());
+        model.addAttribute("featureSet", featureSet);
+        model.addAttribute("skills", skillService.getAllSkills());
+        model.addAttribute("agencies", agencyService.getAllAgencies());
+        model.addAttribute("title", "Edit your actors profile");
+        return "actor/form";
+    }
+
+    @PostMapping("/my-profile/edit")
+    public String editMyProfile(Actor actor,
+                                @AuthenticationPrincipal CurrentUser customUser,
+                                Model model,
+                                @RequestParam String gender,
+                                @RequestParam String height,
+                                @RequestParam String hairColor,
+                                @RequestParam String hairLength,
+                                @RequestParam String eyeColor,
+                                @RequestParam String figure,
+                                @RequestParam int ageFrom,
+                                @RequestParam int ageTo,
+                                @RequestParam String newSkill) {
+        Actor actorByUser = actorService.getActorByUser(customUser.getUser());
+        FeatureSet featureSet = featureSetService.getFeatureSetByActorId(actorByUser.getId());
+        featureSet.setGender(gender);
+        featureSet.setHeight(height);
+        featureSet.setHairColor(hairColor);
+        featureSet.setHairLength(hairLength);
+        featureSet.setEyeColor(eyeColor);
+        featureSet.setFigure(figure);
+        featureSet.setAgeFrom(ageFrom);
+        featureSet.setAgeTo(ageTo);
+        featureSetService.updateFeatureSet(featureSet);
+        actorByUser.setFeatureSet(featureSet);
+        if (!newSkill.isBlank()) {
+            Skill skill = new Skill();
+            skill.setName(newSkill);
+            skillService.createNewSkill(skill);
+            List<Skill> skills = actor.getSkills();
+            skills.add(skill);
+            actorByUser.setSkills(skills);
+        }
+        actorByUser.setAgency(actor.getAgency());
+        actorByUser.setEducation(actor.getEducation());
+        actorService.updateActor(actor);
+        return "redirect:/actor/my-profile";
+    }
+
 
     @GetMapping("/casting/list")
     public String castingList(@AuthenticationPrincipal CurrentUser customUser, Model model) {
