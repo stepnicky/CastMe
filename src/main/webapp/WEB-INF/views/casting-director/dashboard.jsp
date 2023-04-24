@@ -26,7 +26,7 @@
                             <c:set var="numOfSelftapes" value="numOfSelftapes${casting.id}"/>
                             <tr class="d-flex">
                                 <td class="col-4">
-                                    Number of selftapes:
+                                    <i class="fas fa-check" aria-hidden="true"></i>
                                     ${pageContext.request.getAttribute(numOfSelftapes)}
                                 </td>
                                 <td class="col-1"></td>

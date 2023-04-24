@@ -24,6 +24,7 @@ import pl.coderslab.castme.User.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/actor")
@@ -157,6 +158,8 @@ public class ActorController {
         for (Role r : roles) {
             Long numOfLikes = roleService.countStatusByRole(r.getId(), "liked");
             model.addAttribute(String.format("numOfLikes%s", r.getId()), numOfLikes);
+            Long numOfSelftapes = roleService.countStatusByRole(r.getId(), "completed");
+            model.addAttribute(String.format("numOfSelftapes%s", r.getId()), numOfSelftapes);
         }
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
@@ -171,6 +174,8 @@ public class ActorController {
         model.addAttribute("role", role);
         Long numOfLikes = roleService.countStatusByRole(roleId, "liked");
         model.addAttribute("numOfLikes", numOfLikes);
+        Long numOfSelftapes = roleService.countStatusByRole(roleId, "completed");
+        model.addAttribute("numOfSelftapes", numOfSelftapes);
         FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
         model.addAttribute("featureSet", featureSet);
         List<Skill> skills = skillService.getSkillsByRoleId(roleId);
@@ -209,5 +214,25 @@ public class ActorController {
         model.addAttribute("casting", casting);
         model.addAttribute("roles", roles);
         return "casting/archives-details";
+    }
+
+    @PostMapping("selftape/add")
+    public String uploadSelftape(@AuthenticationPrincipal CurrentUser customUser,
+                                 @RequestParam String link,
+                                 @RequestParam Long roleId) {
+        User user = customUser.getUser();
+        Actor actor = actorService.getActorByUser(user);
+        Role role = roleService.getRoleById(roleId);
+        Selftape selftape = new Selftape(link, role, actor);
+        selftapeService.saveSelftape(selftape);
+        ActorRole actorRole = actorRoleService.getActorRoleByActorIdAndRoleId(actor.getId(), roleId);
+        Status completed = statusService.getStatusByName("completed");
+        Status selftapeViewed = statusService.getStatusByName("selftapeViewed");
+        Set<Status> statuses = actorRole.getStatuses();
+        statuses.remove(selftapeViewed);
+        statuses.add(completed);
+        actorRole.setStatuses(statuses);
+        actorRoleService.updateActorRole(actorRole);
+        return String.format("redirect:/actor/role/%s/details", roleId);
     }
 }

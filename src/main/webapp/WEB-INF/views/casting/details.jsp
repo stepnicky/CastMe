@@ -73,9 +73,12 @@
                                         <td class="col-2">${role.title}</td>
                                         <td class="col-6">${role.description}</td>
                                         <c:set var="numOfLikes" value="numOfLikes${role.id}"/>
+                                        <c:set var="numOfSelftapes" value="numOfSelftapes${role.id}"/>
                                         <td class="col-2">
                                             <i class="fas fa-heart" aria-hidden="true"></i>
                                             ${pageContext.request.getAttribute(numOfLikes)}
+                                            <i class="fas fa-check" aria-hidden="true"></i>
+                                            ${pageContext.request.getAttribute(numOfSelftapes)}
                                         </td>
                                         <td class="col-2 center">
                                             <sec:authorize access="hasRole('CASTING_DIRECTOR')">

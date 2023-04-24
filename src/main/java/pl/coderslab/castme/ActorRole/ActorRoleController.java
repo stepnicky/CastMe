@@ -1,6 +1,7 @@
 package pl.coderslab.castme.ActorRole;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,12 +35,20 @@ public class ActorRoleController {
             ActorRole actorRole = actorRoleService.getActorRoleById(id);
             String userRole = customUser.getUser().getUserRole().getUserRole();
             Set<Status> statuses = actorRole.getStatuses();
+            Status viewedByActor = statusService.getStatusByName("viewedByActor");
+            Status liked = statusService.getStatusByName("liked");
+            Status likeViewed = statusService.getStatusByName("likeViewedByCastingDirector");
+            Status completed = statusService.getStatusByName("completed");
+            Status selftapeViewed = statusService.getStatusByName("selftapeViewed");
             if (userRole.equals("ROLE_ACTOR")) {
-                Status status = statusService.getStatusByName("viewedByActor");
-                statuses.add(status);
+                statuses.add(viewedByActor);
             } else if (userRole.equals("ROLE_CASTING_DIRECTOR")) {
-                Status status = statusService.getStatusByName("likeViewedByCastingDirector");
-                statuses.add(status);
+                if(!statuses.contains(likeViewed) && statuses.contains(liked)) {
+                    statuses.add(likeViewed);
+                } else if (!statuses.contains(selftapeViewed) && statuses.contains(completed)){
+                    statuses.add(selftapeViewed);
+                }
+
             }
             actorRole.setStatuses(statuses);
             actorRoleService.updateActorRole(actorRole);
