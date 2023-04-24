@@ -8,7 +8,7 @@
       </a>
     </sec:authorize>
     <sec:authorize access="hasRole('ACTOR')">
-      <a class="nav-link" href="/actor/profile">
+      <a class="nav-link" href="/actor/my-profile">
         <span>My profile</span>
         <i class="fas fa-angle-right"></i>
       </a>
@@ -22,7 +22,7 @@
       </a>
     </sec:authorize>
     <sec:authorize access="hasRole('ACTOR')">
-      <a class="nav-link" href="/actor/agency">
+      <a class="nav-link" href="/actor/my-agency">
         <span>My agency</span>
         <i class="fas fa-angle-right"></i>
       </a>
