@@ -40,17 +40,17 @@
                                         <td class="col-5">
                                             <c:set var="found" value="${false}"/>
                                             <c:forEach items="${actorRole.statuses}" var="status">
+                                                <c:if test="${status.name.equals(\"completed\")}">
+                                                    <i data-id="${actorRole.id}" class="fas fa-check"></i>
+                                                </c:if>
                                                 <c:if test="${status.name.equals(\"liked\")}">
-                                                    <i data-id="${actorRole.id}" class="heart fas fa-heart" aria-hidden="true"></i>
+                                                    <i data-id="${actorRole.id}" class="heart fas fa-heart"></i>
                                                     <span>You like it!</span>
                                                     <c:set var="found" value="${true}"/>
                                                 </c:if>
-                                                <c:if test="${status.name.equals(\"completed\")}">
-                                                    <i data-id="${actorRole.id}" class="fas fa-check" aria-hidden="true"></i>
-                                                </c:if>
                                             </c:forEach>
                                             <c:if test="${found == false}">
-                                                <i data-id="${actorRole.id}" class="heart far fa-heart" aria-hidden="true"></i>
+                                                <i data-id="${actorRole.id}" class="heart far fa-heart"></i>
                                                 <span>Hit heart and take part!</span>
                                             </c:if>
                                         </td>

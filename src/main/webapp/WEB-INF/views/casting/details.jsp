@@ -75,9 +75,9 @@
                                         <c:set var="numOfLikes" value="numOfLikes${role.id}"/>
                                         <c:set var="numOfSelftapes" value="numOfSelftapes${role.id}"/>
                                         <td class="col-2">
-                                            <i class="fas fa-heart" aria-hidden="true"></i>
+                                            <i class="fas fa-heart"></i>
                                             ${pageContext.request.getAttribute(numOfLikes)}
-                                            <i class="fas fa-check" aria-hidden="true"></i>
+                                            <i class="fas fa-check"></i>
                                             ${pageContext.request.getAttribute(numOfSelftapes)}
                                         </td>
                                         <td class="col-2 center">

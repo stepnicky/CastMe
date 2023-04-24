@@ -35,4 +35,8 @@ public class ActorService {
     public List<Actor> getActorsByRoleStatus(Long roleId, String status) {
         return actorRepository.getByRoleStatus(roleId, status);
     }
+
+    public List<Actor> getActorsByCastingDirectorId(Long id) {
+        return actorRepository.getByCastingDirectorId(id);
+    }
 }
