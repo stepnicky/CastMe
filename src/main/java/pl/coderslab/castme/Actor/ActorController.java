@@ -198,7 +198,6 @@ public class ActorController {
         return "redirect:/actor/my-profile";
     }
 
-
     @GetMapping("/casting/list")
     public String castingList(@AuthenticationPrincipal CurrentUser customUser, Model model) {
         User user = customUser.getUser();

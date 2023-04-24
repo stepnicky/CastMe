@@ -43,4 +43,8 @@ public class ActorService {
     public void updateActor(Actor actor) {
         actorRepository.save(actor);
     }
+
+    public Actor getActorById(Long actorId) {
+        return actorRepository.findById(actorId).orElseThrow(RuntimeException::new);
+    }
 }

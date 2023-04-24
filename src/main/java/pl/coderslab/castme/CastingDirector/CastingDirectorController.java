@@ -354,4 +354,18 @@ public class CastingDirectorController {
         actorRole.setStatuses(statuses);
         actorRoleService.updateActorRole(actorRole);
     }
+    @GetMapping("/actors/list")
+    public String actorList(Model model,
+                               @AuthenticationPrincipal CurrentUser customUser) {
+        CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(customUser.getUser());
+        List<Actor> actors = actorService.getActorsByCastingDirectorId(castingDirector.getId());
+        model.addAttribute("actors", actors);
+        return "actor/list";
+    }
+    @GetMapping("/actor/{actorId}")
+    public String actorProfile(@PathVariable Long actorId, Model model) {
+        Actor actor = actorService.getActorById(actorId);
+        model.addAttribute("actor", actor);
+        return "actor/profile";
+    }
 }
