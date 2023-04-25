@@ -8,7 +8,7 @@
         <div class="m-4 p-3 width-medium text-color-darker">
           <div class="dashboard-content border-dashed p-3 m-4 view-height">
             <%--@elvariable id="actor" type="pl.coderslab.castme.Actor.Actor"--%>
-            <form:form method="post" modelAttribute="actor">
+            <form:form method="post" modelAttribute="actor" enctype="multipart/form-data">
               <div class="mt-4 ml-4 mr-4">
                 <div class="row border-bottom border-3">
                   <div class="col"><h3 class="color-header text-uppercase">${title}</h3></div>
@@ -235,12 +235,25 @@
                       <form:checkboxes path="skills" items="${skills}" itemValue="id" itemLabel="name" class="skills"/><br/>
                     </div>
                     <div class="form-group row">
-                      <input type="text" name="newSkill" placeholder=" Add new skill"/></div>
+                      <input type="text" name="newSkill" placeholder=" Add new skill"/>
+                    </div>
+                    <div class="row d-flex">
+                      <div class="border-bottom border-3">
+                        <h3 class="text-uppercase">
+                          Photos
+                        </h3>
+                      </div>
+                    </div>
+                    <div class="row form-group p-4">
+                      <input type="file" name="uploadedPhotos" multiple="multiple">
+                    </div>
                   </div>
                 </div>
-                <input type="hidden" name="featureSetId" value="${featureSet.id}"/>
-              </form:form>
-            </div>
+              </div>
+
+              <input type="hidden" name="featureSetId" value="${featureSet.id}"/>
+            </form:form>
+          </div>
           </div>
         </div>
       </section>

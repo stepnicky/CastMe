@@ -255,6 +255,48 @@ margin: 0 auto !important;
   color: var(--lighter-text-color);
 }
 
+.photo {
+  padding: 5px;
+}
+
+.photo img {
+  height: 200px;
+  width: 200px;
+}
+
+.photo .close {
+  position: relative;
+  right: 20px;
+}
+
+.gallery ul {
+  list-style: none;
+}
+
+.gallery .photo {
+  display: inline-block;
+}
+
+.fullScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  background:rgba(255,255,255,0.7);
+}
+.fullScreen .exit {
+  display: block;
+  margin: auto;
+}
+
+.fullScreen img {
+  display: block;
+  margin: 15px auto 5px;
+  width: auto;
+  height: calc(100% - 50px);
+}
 /*------------------------------*/
 /*---- Newsletter section----*/
 /*------------------------------*/
@@ -344,7 +386,7 @@ margin: 0 auto !important;
 /*------------------------------*/
 
 .left-nav {
-  height: 100vh;
+  min-height: 90vh;
 }
 .dashboard-nowrap {
   flex-wrap: nowrap;
