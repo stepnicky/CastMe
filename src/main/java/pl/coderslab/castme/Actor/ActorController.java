@@ -3,8 +3,9 @@ package pl.coderslab.castme.Actor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
 import pl.coderslab.castme.ActorRoleStatus.Status;
@@ -14,6 +15,8 @@ import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
+import pl.coderslab.castme.Photo.Photo;
+import pl.coderslab.castme.Photo.PhotoService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
 import pl.coderslab.castme.Selftape.Selftape;
@@ -23,7 +26,8 @@ import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -42,6 +46,7 @@ public class ActorController {
     private final StatusService statusService;
     private final RoleService roleService;
     private final SelftapeService selftapeService;
+    private final PhotoService photoService;
 
     public ActorController(ActorService actorService,
                            SkillService skillService,
@@ -51,7 +56,8 @@ public class ActorController {
                            ActorRoleService actorRoleService,
                            StatusService statusService,
                            RoleService roleService,
-                           SelftapeService selftapeService) {
+                           SelftapeService selftapeService,
+                           PhotoService photoService) {
         this.actorService = actorService;
         this.skillService = skillService;
         this.agencyService = agencyService;
@@ -61,6 +67,7 @@ public class ActorController {
         this.statusService = statusService;
         this.roleService = roleService;
         this.selftapeService = selftapeService;
+        this.photoService = photoService;
     }
 
     @GetMapping("")
@@ -116,7 +123,8 @@ public class ActorController {
                                      @RequestParam int ageFrom,
                                      @RequestParam int ageTo,
                                      @RequestParam String newSkill,
-                                     @AuthenticationPrincipal CurrentUser customUser) {
+                                     @RequestParam("uploadedPhotos") List<MultipartFile> photos,
+                                     @AuthenticationPrincipal CurrentUser customUser) throws IOException {
         User user = customUser.getUser();
         actor.setUser(user);
         if (!newSkill.isBlank()) {
@@ -134,6 +142,14 @@ public class ActorController {
         featureSetService.createFeatureSet(featureSet);
         actor.setFeatureSet(featureSet);
         actorService.createActor(actor);
+        for(MultipartFile photo : photos) {
+            if(!photo.isEmpty()) {
+                Photo p = new Photo();
+                p.setImage(photo.getBytes());
+                p.setActor(actor);
+                photoService.savePhoto(p);
+            }
+        }
         return "redirect:/actor";
     }
 
@@ -143,6 +159,8 @@ public class ActorController {
         User user = customUser.getUser();
         Actor actor = actorService.getActorByUser(user);
         model.addAttribute("actor", actor);
+        List<Photo> photos = photoService.getPhotosByActor(actor);
+        model.addAttribute("photos", photos);
         return "actor/profile";
     }
 
@@ -171,7 +189,8 @@ public class ActorController {
                                 @RequestParam String figure,
                                 @RequestParam int ageFrom,
                                 @RequestParam int ageTo,
-                                @RequestParam String newSkill) {
+                                @RequestParam("uploadedPhotos") List<MultipartFile> photos,
+                                @RequestParam String newSkill) throws IOException {
         Actor actorByUser = actorService.getActorByUser(customUser.getUser());
         FeatureSet featureSet = featureSetService.getFeatureSetByActorId(actorByUser.getId());
         featureSet.setGender(gender);
@@ -194,7 +213,15 @@ public class ActorController {
         }
         actorByUser.setAgency(actor.getAgency());
         actorByUser.setEducation(actor.getEducation());
-        actorService.updateActor(actor);
+        for(MultipartFile photo : photos) {
+            if(!photo.isEmpty()) {
+                Photo p = new Photo();
+                p.setImage(photo.getBytes());
+                p.setActor(actorByUser);
+                photoService.savePhoto(p);
+            }
+        }
+        actorService.updateActor(actorByUser);
         return "redirect:/actor/my-profile";
     }
 

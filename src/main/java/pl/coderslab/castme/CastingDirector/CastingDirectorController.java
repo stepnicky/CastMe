@@ -15,6 +15,8 @@ import pl.coderslab.castme.Casting.Casting;
 import pl.coderslab.castme.Casting.CastingService;
 import pl.coderslab.castme.FeatureSet.FeatureSet;
 import pl.coderslab.castme.FeatureSet.FeatureSetService;
+import pl.coderslab.castme.Photo.Photo;
+import pl.coderslab.castme.Photo.PhotoService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
 import pl.coderslab.castme.Selftape.Selftape;
@@ -46,6 +48,7 @@ public class CastingDirectorController {
     private final ActorService actorService;
     private final SelftapeService selftapeService;
     private final StatusService statusService;
+    private final PhotoService photoService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
@@ -55,7 +58,8 @@ public class CastingDirectorController {
                                      SkillService skillService,
                                      ActorService actorService,
                                      SelftapeService selftapeService,
-                                     StatusService statusService) {
+                                     StatusService statusService,
+                                     PhotoService photoService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
         this.roleService = roleService;
@@ -65,6 +69,7 @@ public class CastingDirectorController {
         this.actorService = actorService;
         this.selftapeService = selftapeService;
         this.statusService = statusService;
+        this.photoService = photoService;
     }
 
     @GetMapping("")
@@ -365,7 +370,9 @@ public class CastingDirectorController {
     @GetMapping("/actor/{actorId}")
     public String actorProfile(@PathVariable Long actorId, Model model) {
         Actor actor = actorService.getActorById(actorId);
+        List<Photo> photos = photoService.getPhotosByActor(actor);
         model.addAttribute("actor", actor);
+        model.addAttribute("photos", photos);
         return "actor/profile";
     }
 }
