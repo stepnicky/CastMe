@@ -297,6 +297,27 @@ margin: 0 auto !important;
   width: auto;
   height: calc(100% - 50px);
 }
+
+.file-wrapper {
+  position: relative;
+}
+
+.attachment-download {
+  color: var(--light-link-color);
+}
+
+.attachment-delete {
+  position: absolute;
+  top: -20px;
+  left: 45px;
+}
+
+.file-icon {
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: 10px;
+}
 /*------------------------------*/
 /*---- Newsletter section----*/
 /*------------------------------*/

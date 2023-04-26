@@ -25,10 +25,7 @@ deleteBtns.forEach(deleteBtn => {
         const img = this.nextElementSibling;
         const photoId = img.dataset.id;
         fetch(`/photo/${photoId}/delete`, {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            method: "DELETE"
         })
             .then(res => res.json())
             .then(res => console.log(res))

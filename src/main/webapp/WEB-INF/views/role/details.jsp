@@ -36,11 +36,22 @@
                     Attachments
                   </th>
                   <td class="col-7">
-                    <c:forEach var="attachmentId" items="${attachmentIds}">
-                      <a href="/attachment/${attachmentId}/download" class="attachment-download"><i class="fas fa-file"></i></a>
+                    <div class="row">
+                    <c:forEach var="attachment" items="${attachments}">
+                      <div class="col-2 file-wrapper">
+                        <sec:authorize access="hasRole('CASTING_DIRECTOR')">
+                          <button data-id="${attachment.id}" type="button" class="attachment-delete close">
+                            <span>&times;</span>
+                          </button>
+                        </sec:authorize>
+                        <a href="/attachment/${attachment.id}/download" class="attachment-download">
+                          <i class="fas fa-file file-icon"></i><br>
+                          <c:out value="${attachment.fileName}"/>
+                        </a>
+                      </div>
                     </c:forEach>
+                    </div>
                   </td>
-                  <td class="col-2"></td>
                 </tr>
                 </tbody>
               </table>
@@ -128,7 +139,7 @@
     </div>
   </section>
 
-
+  <script src="/js/attachmentHandler.js" type="module"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
           crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

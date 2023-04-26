@@ -201,7 +201,9 @@ public class CastingDirectorController {
         role.setFeatureSet(featureSet);
         roleService.addNewRole(role);
         for (MultipartFile attachment : attachments) {
-            roleAttachmentService.storeAttachment(attachment, role);
+            if(!attachment.isEmpty()) {
+                roleAttachmentService.storeAttachment(attachment, role);
+            }
         }
         Casting casting = castingService.getCastingById(castingId);
         List<Role> roles = casting.getRoles();
@@ -254,7 +256,9 @@ public class CastingDirectorController {
         role.setFeatureSet(featureSet);
         roleService.updateRole(role);
         for (MultipartFile attachment : attachments) {
-            roleAttachmentService.storeAttachment(attachment, role);
+            if(!attachment.isEmpty()) {
+                roleAttachmentService.storeAttachment(attachment, role);
+            }
         }
         Casting casting = castingService.getCastingByRoleId(roleId);
         return String.format("redirect:/director/casting/%s/details", casting.getId());
@@ -277,8 +281,8 @@ public class CastingDirectorController {
         model.addAttribute("actors", actors);
         List<Selftape> selftapes = selftapeService.getSelftapesByRoleId(roleId);
         model.addAttribute("selftapes", selftapes);
-        List<String> attachmentIds = roleAttachmentService.getAttachmentIdsByRoleId(roleId);
-        model.addAttribute("attachmentIds", attachmentIds);
+        List<RoleAttachment> attachments = roleAttachmentService.getAttachmentsByRole(role);
+        model.addAttribute("attachments", attachments);
         return "role/details";
     }
     @GetMapping("/role/{roleId}/delete")
