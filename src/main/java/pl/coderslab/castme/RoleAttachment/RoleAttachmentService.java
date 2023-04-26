@@ -38,14 +38,15 @@ public class RoleAttachmentService {
         RoleAttachment roleAttachment = roleAttachmentRepository.findById(attachmentId).orElseThrow(RuntimeException::new);
         return roleAttachment;
     }
-    public List<String> getAttachmentIdsByRoleId(Long roleId) {
-        return roleAttachmentRepository.getIdsByRoleId(roleId);
-    }
 
     public List<RoleAttachment> getAttachmentsByRole(Role role) {
         return roleAttachmentRepository.getByRole(role);
     }
     public void deleteAttachment(RoleAttachment attachment) {
         roleAttachmentRepository.delete(attachment);
+    }
+
+    public void deleteAttachmentsByRoleId(Long roleId) {
+        roleAttachmentRepository.deleteByRoleId(roleId);
     }
 }

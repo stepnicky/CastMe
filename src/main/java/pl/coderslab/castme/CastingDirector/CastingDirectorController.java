@@ -291,6 +291,7 @@ public class CastingDirectorController {
         statusService.deleteActorRoleStatusByRoleId(roleId);
         actorRoleService.deleteActorRolesByRoleId(roleId);
         selftapeService.deleteSelftapesByRoleId(roleId);
+        roleAttachmentService.deleteAttachmentsByRoleId(roleId);
         FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(roleId);
         roleService.deleteRole(roleId);
         featureSetService.deleteFeatureSet(featureSet);
@@ -315,6 +316,7 @@ public class CastingDirectorController {
             selftapeService.deleteSelftapesByRoleId(role.getId());
             FeatureSet featureSet = featureSetService.getFeatureSetByRoleId(role.getId());
             featureSetsByCasting.add(featureSet);
+            roleAttachmentService.deleteAttachmentsByRoleId(role.getId());
         }
         roleService.deleteRolesByCastingId(castingId);
         for(FeatureSet featureSet : featureSetsByCasting) {
