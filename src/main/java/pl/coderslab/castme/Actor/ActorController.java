@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import pl.coderslab.castme.ActorRole.ActorRole;
 import pl.coderslab.castme.ActorRole.ActorRoleService;
 import pl.coderslab.castme.ActorRoleStatus.Status;
@@ -19,6 +18,8 @@ import pl.coderslab.castme.Photo.Photo;
 import pl.coderslab.castme.Photo.PhotoService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
+import pl.coderslab.castme.RoleAttachment.RoleAttachment;
+import pl.coderslab.castme.RoleAttachment.RoleAttachmentService;
 import pl.coderslab.castme.Selftape.Selftape;
 import pl.coderslab.castme.Selftape.SelftapeService;
 import pl.coderslab.castme.Skill.Skill;
@@ -26,7 +27,6 @@ import pl.coderslab.castme.Skill.SkillService;
 import pl.coderslab.castme.User.CurrentUser;
 import pl.coderslab.castme.User.User;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,7 @@ public class ActorController {
     private final RoleService roleService;
     private final SelftapeService selftapeService;
     private final PhotoService photoService;
+    private final RoleAttachmentService roleAttachmentService;
 
     public ActorController(ActorService actorService,
                            SkillService skillService,
@@ -57,7 +58,8 @@ public class ActorController {
                            StatusService statusService,
                            RoleService roleService,
                            SelftapeService selftapeService,
-                           PhotoService photoService) {
+                           PhotoService photoService,
+                           RoleAttachmentService roleAttachmentService) {
         this.actorService = actorService;
         this.skillService = skillService;
         this.agencyService = agencyService;
@@ -68,6 +70,7 @@ public class ActorController {
         this.roleService = roleService;
         this.selftapeService = selftapeService;
         this.photoService = photoService;
+        this.roleAttachmentService = roleAttachmentService;
     }
 
     @GetMapping("")
@@ -180,7 +183,6 @@ public class ActorController {
     @PostMapping("/my-profile/edit")
     public String editMyProfile(Actor actor,
                                 @AuthenticationPrincipal CurrentUser customUser,
-                                Model model,
                                 @RequestParam String gender,
                                 @RequestParam String height,
                                 @RequestParam String hairColor,
@@ -273,6 +275,8 @@ public class ActorController {
         model.addAttribute("actors", actors);
         List<Selftape> selftapes = selftapeService.getSelftapesByRoleId(roleId);
         model.addAttribute("selftapes", selftapes);
+        List<RoleAttachment> attachments = roleAttachmentService.getAttachmentsByRole(role);
+        model.addAttribute("attachments", attachments);
         return "role/details";
     }
 
