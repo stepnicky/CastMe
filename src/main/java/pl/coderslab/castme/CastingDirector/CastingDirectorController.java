@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.coderslab.castme.Actor.Actor;
 import pl.coderslab.castme.Actor.ActorService;
 import pl.coderslab.castme.ActorRole.ActorRole;
@@ -19,6 +20,8 @@ import pl.coderslab.castme.Photo.Photo;
 import pl.coderslab.castme.Photo.PhotoService;
 import pl.coderslab.castme.Role.Role;
 import pl.coderslab.castme.Role.RoleService;
+import pl.coderslab.castme.RoleAttachment.RoleAttachment;
+import pl.coderslab.castme.RoleAttachment.RoleAttachmentService;
 import pl.coderslab.castme.Selftape.Selftape;
 import pl.coderslab.castme.Selftape.SelftapeService;
 import pl.coderslab.castme.Skill.Skill;
@@ -49,6 +52,7 @@ public class CastingDirectorController {
     private final SelftapeService selftapeService;
     private final StatusService statusService;
     private final PhotoService photoService;
+    private final RoleAttachmentService roleAttachmentService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
@@ -59,7 +63,8 @@ public class CastingDirectorController {
                                      ActorService actorService,
                                      SelftapeService selftapeService,
                                      StatusService statusService,
-                                     PhotoService photoService) {
+                                     PhotoService photoService,
+                                     RoleAttachmentService roleAttachmentService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
         this.roleService = roleService;
@@ -70,6 +75,7 @@ public class CastingDirectorController {
         this.selftapeService = selftapeService;
         this.statusService = statusService;
         this.photoService = photoService;
+        this.roleAttachmentService = roleAttachmentService;
     }
 
     @GetMapping("")
@@ -180,7 +186,8 @@ public class CastingDirectorController {
                                    @RequestParam String eyeColor,
                                    @RequestParam String figure,
                                    @RequestParam int ageFrom,
-                                   @RequestParam int ageTo) {
+                                   @RequestParam int ageTo,
+                                   @RequestParam List<MultipartFile> attachments) {
         if(result.hasErrors()) {
             model.addAttribute("title", "Add new role");
             model.addAttribute("skills", skillService.getAllSkills());
@@ -193,6 +200,9 @@ public class CastingDirectorController {
         featureSetService.createFeatureSet(featureSet);
         role.setFeatureSet(featureSet);
         roleService.addNewRole(role);
+        for (MultipartFile attachment : attachments) {
+            roleAttachmentService.storeAttachment(attachment, role);
+        }
         Casting casting = castingService.getCastingById(castingId);
         List<Role> roles = casting.getRoles();
         roles.add(role);
@@ -221,7 +231,8 @@ public class CastingDirectorController {
                            @RequestParam String eyeColor,
                            @RequestParam String figure,
                            @RequestParam int ageFrom,
-                           @RequestParam int ageTo) {
+                           @RequestParam int ageTo,
+                           @RequestParam List<MultipartFile> attachments) {
         if(result.hasErrors()) {
             model.addAttribute("title", "Edit role");
             model.addAttribute("role", roleService.getRoleById(roleId));
@@ -242,6 +253,9 @@ public class CastingDirectorController {
         featureSetService.updateFeatureSet(featureSet);
         role.setFeatureSet(featureSet);
         roleService.updateRole(role);
+        for (MultipartFile attachment : attachments) {
+            roleAttachmentService.storeAttachment(attachment, role);
+        }
         Casting casting = castingService.getCastingByRoleId(roleId);
         return String.format("redirect:/director/casting/%s/details", casting.getId());
     }
@@ -263,6 +277,8 @@ public class CastingDirectorController {
         model.addAttribute("actors", actors);
         List<Selftape> selftapes = selftapeService.getSelftapesByRoleId(roleId);
         model.addAttribute("selftapes", selftapes);
+        List<String> attachmentIds = roleAttachmentService.getAttachmentIdsByRoleId(roleId);
+        model.addAttribute("attachmentIds", attachmentIds);
         return "role/details";
     }
     @GetMapping("/role/{roleId}/delete")

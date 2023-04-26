@@ -28,9 +28,19 @@
                     <i class="fas fa-check"></i>
                     ${numOfSelftapes}
                   </th>
+                  <td class="col-7"></td>
+                  <td class="col-2"></td>
+                </tr>
+                <tr class="d-flex">
+                  <th scope="row" class="col-2">
+                    Attachments
+                  </th>
                   <td class="col-7">
-                  <td class="col-2">
+                    <c:forEach var="attachmentId" items="${attachmentIds}">
+                      <a href="/attachment/${attachmentId}/download" class="attachment-download"><i class="fas fa-file"></i></a>
+                    </c:forEach>
                   </td>
+                  <td class="col-2"></td>
                 </tr>
                 </tbody>
               </table>

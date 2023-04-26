@@ -180,7 +180,6 @@ public class ActorController {
     @PostMapping("/my-profile/edit")
     public String editMyProfile(Actor actor,
                                 @AuthenticationPrincipal CurrentUser customUser,
-                                Model model,
                                 @RequestParam String gender,
                                 @RequestParam String height,
                                 @RequestParam String hairColor,

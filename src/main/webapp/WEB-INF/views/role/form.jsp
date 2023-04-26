@@ -8,7 +8,7 @@
             <div class="m-4 p-3 width-medium text-color-darker">
                 <div class="dashboard-content border-dashed p-3 m-4 view-height">
 
-                    <form:form method="post" modelAttribute="role">
+                    <form:form method="post" modelAttribute="role" enctype="multipart/form-data">
                         <div class="mt-4 ml-4 mr-4">
                             <div class="row border-bottom border-3">
                                 <div class="col"><h3 class="color-header text-uppercase">${title}</h3></div>
@@ -29,6 +29,12 @@
                                         <th scope="row" class="col-2">Description</th>
                                         <td class="col-7">
                                             <form:textarea path="description" class="w-100 p-1" rows="5"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="d-flex">
+                                        <th scope="row" class="col-2">Attachments</th>
+                                        <td class="col-7">
+                                            <input type="file" name="attachments" multiple="multiple"/>
                                         </td>
                                     </tr>
                                 </tbody>
