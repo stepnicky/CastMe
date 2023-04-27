@@ -19,14 +19,14 @@ public class ActorDao {
     public List<Actor> getByRoleRequirements(Role role) {
         Query query = entityManager.createQuery("select distinct a from Actor a " +
                 "join a.featureSet fs " +
-                "where fs.gender like concat('%', :gender, '%') " +
+                "where fs.gender = :gender " +
                 "and fs.figure like concat('%', :figure, '%') " +
                 "and fs.eyeColor like concat('%', :eyeColor, '%') " +
                 "and fs.hairColor like concat('%', :hairColor, '%') " +
                 "and fs.hairLength like concat('%', :hairLength, '%') " +
                 "and fs.height like concat('%', :height, '%') " +
-                "and fs.ageFrom >= :ageFrom " +
-                "and fs.ageTo <= :ageTo");
+                "and (fs.ageFrom <= :ageFrom " +
+                "or fs.ageTo >= :ageTo)");
         query.setParameter("gender", role.getFeatureSet().getGender());
         query.setParameter("figure", role.getFeatureSet().getFigure());
         query.setParameter("eyeColor", role.getFeatureSet().getEyeColor());

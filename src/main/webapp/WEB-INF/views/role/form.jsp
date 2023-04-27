@@ -70,9 +70,6 @@
                                                 <option value="other" <c:if test="${'o2ther' eq featureSet.gender}">selected</c:if>>
                                                     Other
                                                 </option>
-                                                <option value="" <c:if test="${'' eq featureSet.gender}">selected</c:if>>
-                                                    No difference
-                                                </option>
                                             </select>
                                         </div>
                                     </div>

@@ -34,12 +34,12 @@
                             </tr>
                             <c:set var="numOfLikes" value="numOfLikes${casting.id}"/>
                             <tr class="d-flex">
-                                <td class="col-2">
+                                <td class="col-4">
                                     <i class="fas fa-heart"></i>
                                     ${pageContext.request.getAttribute(numOfLikes)}
                                 </td>
                                 <td class="col-1"></td>
-                                <td class="col-10"></td>
+                                <td class="col-7"></td>
                             </tr>
                             <c:set var="daysTillDeadline" value="daysTillDeadline${casting.id}"/>
                             <tr class="d-flex">

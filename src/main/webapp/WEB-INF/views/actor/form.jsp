@@ -13,7 +13,7 @@
                 <div class="row border-bottom border-3">
                   <div class="col"><h3 class="color-header text-uppercase">${title}</h3></div>
                   <div class="col d-flex justify-content-end mb-2">
-                    <button type="submit" class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">Save</button>
+                    <button type="submit" class="btn btn-color">Save</button>
                   </div>
                 </div>
                 <table class="table borderless">
@@ -53,17 +53,14 @@
                       </div>
                       <div class="col-7">
                         <select id="gender" name="gender">
-                          <option value="male" <c:if test="${'Male' eq featureSet.gender}">selected</c:if>>
+                          <option value="male" <c:if test="${'male' eq featureSet.gender}">selected</c:if>>
                             Male
                           </option>
-                          <option value="female" <c:if test="${'Female' eq featureSet.gender}">selected</c:if>>
+                          <option value="female" <c:if test="${'female' eq featureSet.gender}">selected</c:if>>
                             Female
                           </option>
-                          <option value="other" <c:if test="${'Other' eq featureSet.gender}">selected</c:if>>
+                          <option value="other" <c:if test="${'other' eq featureSet.gender}">selected</c:if>>
                             Other
-                          </option>
-                          <option value="" <c:if test="${'' eq featureSet.gender}">selected</c:if>>
-                            No difference
                           </option>
                         </select>
                       </div>

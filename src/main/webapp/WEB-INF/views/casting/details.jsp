@@ -13,13 +13,13 @@
                             <div class="col d-flex justify-content-end mb-2 noPadding">
                                 <sec:authorize access="hasRole('CASTING_DIRECTOR')">
                                     <a href="/director/casting/list"
-                                       class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">
+                                       class="btn btn-success">
                                         Back to list
                                     </a>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('ACTOR')">
                                     <a href="/actor/casting/list"
-                                       class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">
+                                       class="btn btn-success">
                                         Back to list
                                     </a>
                                 </sec:authorize>
@@ -83,22 +83,22 @@
                                         <td class="col-2 center">
                                             <sec:authorize access="hasRole('CASTING_DIRECTOR')">
                                                 <a href="/director/role/${role.id}/edit"
-                                                   class="btn btn-warning rounded-0 text-light m-1">
+                                                   class="btn btn-warning text-light m-1">
                                                     Edit
                                                 </a>
                                                 <a href="/director/role/${role.id}/delete"
-                                                   class="delete btn btn-danger rounded-0 text-light m-1"
+                                                   class="delete btn btn-danger text-light m-1"
                                                    data-toggle="modal" data-target="#exampleModalCenter">
                                                     Delete
                                                 </a>
                                                 <a href="/director/role/${role.id}/details"
-                                                   class="btn btn-info rounded-0 text-light m-1">
+                                                   class="btn btn-info text-light m-1">
                                                     Details
                                                 </a>
                                             </sec:authorize>
                                             <sec:authorize access="hasRole('ACTOR')">
                                                 <a href="/actor/role/${role.id}/details"
-                                                   class="btn btn-info rounded-0 text-light m-1">
+                                                   class="btn btn-info text-light m-1">
                                                     Details
                                                 </a>
                                             </sec:authorize>
@@ -111,7 +111,7 @@
                                     <thead>
                                     <tr class="d-flex">
                                         <th class="col-2">
-                                            <a class="btn btn-primary rounded-0 text-light m-1"
+                                            <a class="btn btn-primary m-1"
                                                href="/director/casting/${casting.id}/role/add">
                                                 Add new role
                                             </a>
