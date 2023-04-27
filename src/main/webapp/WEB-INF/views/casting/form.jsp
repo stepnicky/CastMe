@@ -7,7 +7,7 @@
         <%@include file="../commons/left-nav.jsp"%>
         <div class="m-4 p-3 width-medium">
             <div class="dashboard-content border-dashed p-3 m-4 view-height">
-                <%--@elvariable id="casting" type="pl.coderslab.castme.Casting.Casting"--%>
+                <%--@elvariable id="casting" type="pl.coderslab.castme.casting.Casting"--%>
                 <form:form method="post" modelAttribute="casting">
                     <div class="row border-bottom border-3 p-1 m-1">
                         <div class="col noPadding">
