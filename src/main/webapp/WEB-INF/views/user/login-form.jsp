@@ -48,7 +48,7 @@
           <div class="form-group">
             <input type="password" class="form-control" id="password" name="password" placeholder="password">
           </div>
-          <button class="btn btn-color rounded-0" type="submit">Sign in</button>
+          <button class="btn btn-color" type="submit">Sign in</button>
         </form>
       </div>
     </div>

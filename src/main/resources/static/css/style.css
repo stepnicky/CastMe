@@ -32,6 +32,15 @@ p {
   font-size: 1.2rem;
 }
 
+input, select, textarea {
+  background: var(--light-link-color) !important;
+  border-radius: 8px;
+}
+
+input[type=checkbox] {
+  accent-color: var(--light-link-color);
+}
+
 .bg-light {
 background: var(--background-color);
 }
@@ -307,13 +316,41 @@ margin: 0 auto !important;
 }
 
 .photo {
+  position: relative;
   padding: 5px;
   cursor: pointer;
+  width: 30%;
+  height: 250px;
 }
 
 .photo img {
-  height: 200px;
-  width: 200px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.actor-name {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(208, 95, 61, 0);
+  color: var(--light-link-color);
+  opacity: 0.0;
+  visibility: hidden;
+  transition: background-color, opacity 1s;
+}
+.actor-name h5 {
+  margin: auto;
+}
+
+.photo:hover .actor-name {
+  visibility: visible;
+  opacity: 1;
+  background-color: rgba(208, 95, 61, 0.5);
 }
 
 .photo .close {

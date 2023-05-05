@@ -26,4 +26,7 @@ public class PhotoService {
     public void deletePhoto(Photo photo) {
         photoRepository.delete(photo);
     }
+    public Photo getFirstPhotoByActor(Actor actor) {
+        return photoRepository.getTopByActor(actor);
+    }
 }

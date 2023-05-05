@@ -9,7 +9,6 @@
           <div class="col noPadding">
             <h3 class="color-header text-uppercase">archives</h3>
           </div>
-
         </div>
 
         <div class="schedules-content">
@@ -22,16 +21,16 @@
                 <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
                   <sec:authorize access="hasRole('CASTING_DIRECTOR')">
                     <a href="/director/casting/${casting.id}/delete"
-                       class="delete btn btn-danger rounded-0 text-light m-1"
+                       class="delete btn btn-danger text-light m-1"
                        data-toggle="modal" data-target="#exampleModalCenter">
                       Delete
                     </a>
-                    <a href="/director/casting/archives/${casting.id}/details" class="btn btn-info rounded-0 text-light m-1">
+                    <a href="/director/casting/archives/${casting.id}/details" class="btn btn-info text-light m-1">
                       Details
                     </a>
                   </sec:authorize>
                   <sec:authorize access="hasRole('ACTOR')">
-                    <a href="/actor/casting/archives/${casting.id}/details" class="btn btn-info rounded-0 text-light m-1">
+                    <a href="/actor/casting/archives/${casting.id}/details" class="btn btn-info text-light m-1">
                       Details
                     </a>
                   </sec:authorize>

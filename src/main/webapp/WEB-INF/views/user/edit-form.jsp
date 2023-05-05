@@ -28,7 +28,7 @@
                             <form:hidden path="id" />
                             <form:hidden path="password" />
                             <form:hidden path="userRole" />
-                            <button class="btn btn-color rounded-0" type="submit">Save</button>
+                            <button class="btn btn-color" type="submit">Save</button>
                         </form:form>
                     </div>
                 </div>

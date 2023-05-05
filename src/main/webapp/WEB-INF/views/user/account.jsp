@@ -10,7 +10,7 @@
                             <h3 class="color-header text-uppercase">user account</h3>
                         </div>
                         <div class="col d-flex justify-content-end mb-2 noPadding">
-                            <a href="/user/account/edit" class="btn btn-warning rounded-0 pt-0 pb-0 pr-4 pl-4">Edit</a>
+                            <a href="/user/account/edit" class="btn btn-color">Edit</a>
                         </div>
                     </div>
 

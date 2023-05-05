@@ -8,4 +8,5 @@ import java.util.List;
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
     List<Photo> getByActor(Actor actor);
+    Photo getTopByActor(Actor actor);
 }
