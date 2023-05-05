@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<ul class="nav left-nav flex-column long-bg">
+<ul class="nav left-nav flex-column long-bg view-height">
   <li class="nav-item">
     <sec:authorize access="hasRole('CASTING_DIRECTOR')">
       <a class="nav-link" href="/director/casting/add">

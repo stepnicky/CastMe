@@ -5,11 +5,20 @@
       <%@include file="../commons/left-nav.jsp" %>
       <div class="m-4 p-3 width-medium text-color-darker">
         <div class="dashboard-content border-dashed p-3 m-4 view-height">
-          <c:forEach items="${actors}" var="actor">
-            <a href="<c:url value="/director/actor/${actor.id}"/>">
-                ${actor.user.firstName} ${actor.user.lastName}
-            </a>
-          </c:forEach>
+          <div class="gallery">
+            <ul>
+              <c:forEach var="photo" items="${photos}">
+                <li class="photo">
+                  <a href="<c:url value="/director/actor/${photo.actor.id}"/>">
+                    <img src="data:image/jpeg;base64,${photo.base64Image}"/>
+                    <div class="actor-name">
+                      <h5>${photo.actor.user.firstName} ${photo.actor.user.lastName}</h5>
+                    </div>
+                  </a>
+                </li>
+              </c:forEach>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -386,7 +386,11 @@ public class CastingDirectorController {
                                @AuthenticationPrincipal CurrentUser customUser) {
         CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(customUser.getUser());
         List<Actor> actors = actorService.getActorsByCastingDirectorId(castingDirector.getId());
-        model.addAttribute("actors", actors);
+        List<Photo> photos = new ArrayList<>();
+        for(Actor actor : actors) {
+            photos.add(photoService.getFirstPhotoByActor(actor));
+        }
+        model.addAttribute("photos", photos);
         return "actor/list";
     }
     @GetMapping("/actor/{actorId}")

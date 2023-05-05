@@ -72,7 +72,7 @@
                                 <form:password path="password" class="form-control" placeholder="Password"/>
                             </div>
                             <form:errors path="password" cssClass="error"/>
-                            <button class="btn btn-color rounded-0" type="submit">Sign up</button>
+                            <button class="btn btn-color" type="submit">Sign up</button>
                         </form:form>
                         <c:out value="${successMessage}"/>
                     </div>
