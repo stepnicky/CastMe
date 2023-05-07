@@ -21,4 +21,8 @@ public class AgencyService {
         return agencyRepository.findById(id)
                 .orElseThrow(RuntimeException::new);
     }
+
+    public List<Agency> getAgenciesByCastingDirectorId(Long id) {
+        return agencyRepository.getByCastingDirectorId(id);
+    }
 }

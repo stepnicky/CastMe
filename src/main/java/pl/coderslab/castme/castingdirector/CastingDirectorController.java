@@ -12,6 +12,8 @@ import pl.coderslab.castme.actorrole.ActorRole;
 import pl.coderslab.castme.actorrole.ActorRoleService;
 import pl.coderslab.castme.actorrolestatus.Status;
 import pl.coderslab.castme.actorrolestatus.StatusService;
+import pl.coderslab.castme.agency.Agency;
+import pl.coderslab.castme.agency.AgencyService;
 import pl.coderslab.castme.casting.Casting;
 import pl.coderslab.castme.casting.CastingService;
 import pl.coderslab.castme.featureset.FeatureSet;
@@ -53,6 +55,7 @@ public class CastingDirectorController {
     private final StatusService statusService;
     private final PhotoService photoService;
     private final RoleAttachmentService roleAttachmentService;
+    private final AgencyService agencyService;
 
     public CastingDirectorController(CastingService castingService,
                                      CastingDirectorService castingDirectorService,
@@ -64,7 +67,8 @@ public class CastingDirectorController {
                                      SelftapeService selftapeService,
                                      StatusService statusService,
                                      PhotoService photoService,
-                                     RoleAttachmentService roleAttachmentService) {
+                                     RoleAttachmentService roleAttachmentService,
+                                     AgencyService agencyService) {
         this.castingService = castingService;
         this.castingDirectorService = castingDirectorService;
         this.roleService = roleService;
@@ -76,6 +80,7 @@ public class CastingDirectorController {
         this.statusService = statusService;
         this.photoService = photoService;
         this.roleAttachmentService = roleAttachmentService;
+        this.agencyService = agencyService;
     }
 
     @GetMapping("")
@@ -400,5 +405,12 @@ public class CastingDirectorController {
         model.addAttribute("actor", actor);
         model.addAttribute("photos", photos);
         return "actor/profile";
+    }
+    @GetMapping("/agency/list")
+    public String agencyList(Model model, @AuthenticationPrincipal CurrentUser customUser) {
+        CastingDirector castingDirector = castingDirectorService.getCastingDirectorByUser(customUser.getUser());
+        List<Agency> agencies = agencyService.getAgenciesByCastingDirectorId(castingDirector.getId());
+        model.addAttribute("agencies", agencies);
+        return "agency/list";
     }
 }
