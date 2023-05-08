@@ -25,4 +25,8 @@ public class AgencyService {
     public List<Agency> getAgenciesByCastingDirectorId(Long id) {
         return agencyRepository.getByCastingDirectorId(id);
     }
+
+    public void saveAgency(Agency agency) {
+        agencyRepository.save(agency);
+    }
 }
