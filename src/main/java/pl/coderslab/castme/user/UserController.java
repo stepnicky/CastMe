@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.coderslab.castme.agent.Agent;
 import pl.coderslab.castme.castingdirector.CastingDirector;
 import pl.coderslab.castme.castingdirector.CastingDirectorService;
 import pl.coderslab.castme.userrole.UserRole;
@@ -49,7 +50,7 @@ public class UserController {
             return "user/registration-form";
         }
         userService.saveUser(user);
-        if(user.getUserRole().getUserRole().equals("ROLE_CASTING_DIRECTOR")) {
+        if (user.getUserRole().getUserRole().equals("ROLE_CASTING_DIRECTOR")) {
             CastingDirector castingDirector = new CastingDirector();
             castingDirector.setUser(user);
             castingDirectorService.addCastingDirector(castingDirector);
