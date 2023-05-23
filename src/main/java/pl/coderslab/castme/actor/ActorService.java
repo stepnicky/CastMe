@@ -47,4 +47,8 @@ public class ActorService {
     public Actor getActorById(Long actorId) {
         return actorRepository.findById(actorId).orElseThrow(RuntimeException::new);
     }
+
+    public List<Actor> getActorsByAgencyIdAndRoleId(Long agencyId, Long roleId) {
+        return actorRepository.getByAgencyIdAndRoleId(agencyId, roleId);
+    }
 }

@@ -33,4 +33,9 @@ public interface CastingRepository extends JpaRepository<Casting, Long> {
 
     @Query(value = "select distinct c.* from castings c join roles r on c.id = r.casting_id where r.id = ?1", nativeQuery = true)
     Casting getByRoleId(Long roleId);
+
+    @Query(value = "select distinct c.* from castings c join roles r on c.id = r.casting_id" +
+            " join actors_roles ar on r.id = ar.role_id join actors a on a.id = ar.actor_id" +
+            " join agencies ag on ag.id = a.agency_id where ag.id = ?1 and c.is_active = true", nativeQuery = true)
+    List<Casting> getByAgencyId(Long agencyId);
 }

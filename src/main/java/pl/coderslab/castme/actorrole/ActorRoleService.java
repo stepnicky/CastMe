@@ -62,4 +62,8 @@ public class ActorRoleService {
     public void deleteActorRolesByRoleId(Long roleId) {
         actorRoleRepository.deleteByRoleId(roleId);
     }
+
+    public List<ActorRole> getActorRolesByAgencyId(Long agencyId) {
+        return actorRoleRepository.getAllByAgencyId(agencyId);
+    }
 }

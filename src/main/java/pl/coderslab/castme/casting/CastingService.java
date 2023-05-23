@@ -57,4 +57,8 @@ public class CastingService {
     public void deleteCasting(Long castingId) {
         castingRepository.deleteById(castingId);
     }
+
+    public List<Casting> getCastingsByAgencyId(Long agencyId) {
+        return castingRepository.getByAgencyId(agencyId);
+    }
 }
