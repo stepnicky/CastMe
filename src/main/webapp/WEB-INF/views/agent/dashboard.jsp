@@ -18,6 +18,7 @@
                         </tr>
                         </thead>
                         <tbody>
+<<<<<<< Updated upstream
                             <c:forEach items="${casting.roles}" var="role">
                                         <tr class="d-flex">
                                             <td class="col-3"><strong>Role: ${role.title}</strong></td>
@@ -35,6 +36,48 @@
                                             <td class="col-3"></td>
                                         </tr>
                             </c:forEach>
+=======
+                        <c:forEach items="${casting.roles}" var="role">
+                            <tr class="d-flex">
+                                <td class="col-3"><strong>Role: ${role.title}</strong></td>
+                                <td class="col-6"></td>
+                                <td class="col-3"></td>
+                            </tr>
+
+                            <tr class="d-flex">
+                                <td class="col-3">Actors:</td>
+                                <td class=".desc col-6">
+                                    <c:forEach items="${actorRoles}" var="actorRole" varStatus="loopStatus">
+                                        <c:if test="${actorRole.role.id == role.id}">
+                                            <c:set var="isCompleted" value="${false}"/>
+                                            <c:forEach items="${actorRole.statuses}" var="status">
+                                                <c:if test="${status.name.equals(\"completed\")}">
+                                                    <c:set var="isCompleted" value="${true}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:if test="${isCompleted == true}">
+                                                <i class="fas fa-check"></i>
+                                            </c:if>
+                                            <c:if test="${isCompleted == false}">
+                                                <i class="fas fa-times"></i>
+                                            </c:if>
+                                            ${actorRole.actor.user.firstName} ${actorRole.actor.user.lastName}
+                                        </c:if>
+                                    </c:forEach>
+                                </td>
+                                <td class="col-3"></td>
+                            </tr>
+                        </c:forEach>
+                        <tr class="d-flex">
+                            <td class="col-4">Days until deadline: 8</td>
+                            <td class="col-5"></td>
+                            <td class="col-3">
+                                <a class="btn btn-primary" href="/agent/casting/${casting.id}/details">
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+>>>>>>> Stashed changes
                         </tbody>
                     </table>
                 </div>
