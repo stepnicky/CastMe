@@ -85,13 +85,10 @@ resource "aws_instance" "app_server" {
               sudo -u castme git fetch origin
               sudo -u castme git checkout feature/deployment
               sudo -u castme git pull origin feature/deployment
+              echo "${local.app_env}" > /srv/app/.env
+              chown castme:castme /srv/app/.env
+              export $(cat /srv/app/.env | xargs)
               sudo -u castme docker-compose up --build -d
-              echo "Waiting for MySQL to be ready..."
-              for i in {1..30}; do
-                docker exec app_mysql_1 mysqladmin ping -uroot -pcoderslab && break
-                sleep 2
-              done
-              docker exec -i app_mysql_1 mysql -uroot -pcoderslab cast_me < /srv/app/db-init/init.sql
             EOF
 
   tags = {
