@@ -8,6 +8,13 @@ INSERT INTO cast_me.users (id, email, first_name, last_name, password, phone_num
 INSERT INTO cast_me.users (id, email, first_name, last_name, password, phone_number, user_role_id) VALUES (4, 'george.nowak@mail.com', 'George', 'Nowak', '$2a$10$VLxPVQeqSnh7Z30uXEzH3OCXL/I72iGzHhlKqWUjbnhJWIcoaE9me', '123123123', 1);
 INSERT INTO cast_me.users (id, email, first_name, last_name, password, phone_number, user_role_id) VALUES (5, 'marie.brown@mail.com', 'Marie', 'Brown', '$2a$10$VLxPVQeqSnh7Z30uXEzH3OCXL/I72iGzHhlKqWUjbnhJWIcoaE9me', '123123123', 1);
 
+INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (1, 25, 30, 'blue', 'athletic', 'female', 'blonde', 'short', 'short');
+INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (2, 18, 25, 'blue', 'curvy', 'male', 'blonde', 'medium', 'medium');
+INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (3, 30, 39, 'grey', 'athletic', 'female', 'ginger', 'long', 'tall');
+INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (4, 34, 38, 'brown', 'slim', 'male', 'brown', 'short', 'tall');
+INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (5, 0, 0, '', '', 'male', '', '', '');
+INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (6, 0, 0, '', '', 'female', '', '', '');
+
 INSERT INTO cast_me.casting_directors (id, user_id) VALUES (1, 2);
 INSERT INTO cast_me.actors (id, education, agency_id, feature_set_id, user_id) VALUES (1, 'National Academy of Dramatic Arts', null, 1, 5);
 INSERT INTO cast_me.actors (id, education, agency_id, feature_set_id, user_id) VALUES (2, 'National Academy of Dramatic Arts', null, 2, 1);
@@ -35,13 +42,6 @@ INSERT INTO cast_me.actors_skills (actor_id, skills_id) VALUES (3, 6);
 INSERT INTO cast_me.actors_skills (actor_id, skills_id) VALUES (4, 4);
 INSERT INTO cast_me.actors_skills (actor_id, skills_id) VALUES (4, 5);
 INSERT INTO cast_me.actors_skills (actor_id, skills_id) VALUES (4, 7);
-
-INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (1, 25, 30, 'blue', 'athletic', 'female', 'blonde', 'short', 'short');
-INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (2, 18, 25, 'blue', 'curvy', 'male', 'blonde', 'medium', 'medium');
-INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (3, 30, 39, 'grey', 'athletic', 'female', 'ginger', 'long', 'tall');
-INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (4, 34, 38, 'brown', 'slim', 'male', 'brown', 'short', 'tall');
-INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (5, 0, 0, '', '', 'male', '', '', '');
-INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (6, 0, 0, '', '', 'female', '', '', '');
 
 INSERT INTO cast_me.actors_roles (id, actor_id, role_id) VALUES (1, 2, 1);
 INSERT INTO cast_me.actors_roles (id, actor_id, role_id) VALUES (2, 4, 1);

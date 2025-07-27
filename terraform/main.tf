@@ -8,5 +8,5 @@ resource "aws_key_pair" "deployer" {
 }
 
 locals {
-  app_env = file("${path.module}/.env")
+  app_env = file("../.env")
 }
