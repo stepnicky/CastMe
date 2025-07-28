@@ -14,25 +14,25 @@ jobs:
       - name: Checkout (for completeness, not used here)
         uses: actions/checkout@v4
 
-      - name: Connect and Deploy on EC2
-        uses: appleboy/ssh-action@v1.0.0
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /srv/app
-            git reset --hard
-            git pull origin develop
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            echo "Stopping previous containers"
-            docker compose down
+      - name: Deploy to EC2 and restart Docker
+        run: |
+          ssh -o StrictHostKeyChecking=no "${{ secrets.EC2_USER }}"@"${{ secrets.EC2_HOST }}" << 'EOF'
+          cd /srv/app
+          git reset --hard
+          git pull origin develop
+          
+          echo "Stopping previous containers"
+          docker compose down
 
-            echo "Rebuilding images"
-            docker compose build
+          echo "Rebuilding images"
+          docker compose build
 
-            echo "Starting containers"
-            docker compose up -d --remove-orphans
+          echo "Starting containers"
+          docker compose up -d --remove-orphans
 
-            echo "Deployment complete!"
+          echo "Deployment complete!"
