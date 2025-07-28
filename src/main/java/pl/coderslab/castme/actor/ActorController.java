@@ -328,4 +328,14 @@ public class ActorController {
         actorRoleService.updateActorRole(actorRole);
         return String.format("redirect:/actor/role/%s/details", roleId);
     }
+
+    @GetMapping("liked")
+    public String getLikedCastings(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        User user = currentUser.getUser();
+        Actor actor = actorService.getActorByUser(user);
+        List<Casting> castings = castingService.getCastingsByActorIdAndStatus(actor.getId(), "liked");
+        model.addAttribute("castings", castings);
+        model.addAttribute("liked", 1);
+        return "casting/list";
+    }
 }
