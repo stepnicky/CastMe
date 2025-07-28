@@ -42,6 +42,10 @@ public class CastingService {
         return castingRepository.getActiveByActorId(id);
     }
 
+    public List<Casting> getCastingsByActorIdAndStatus(Long id, String status) {
+        return castingRepository.getByActorIdAndStatus(id, status);
+    }
+
     public List<Casting> getNonActiveCastingsByActorId(Long id) {
         return castingRepository.getNonActiveByActorId(id);
     }
