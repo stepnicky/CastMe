@@ -15,6 +15,12 @@ INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender
 INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (5, 0, 0, '', '', 'male', '', '', '');
 INSERT INTO cast_me.feature_set (id, age_from, age_to, eye_color, figure, gender, hair_color, hair_length, height) VALUES (6, 0, 0, '', '', 'female', '', '', '');
 
+INSERT INTO cast_me.statuses (id, name) VALUES (1, 'liked');
+INSERT INTO cast_me.statuses (id, name) VALUES (2, 'viewedByActor');
+INSERT INTO cast_me.statuses (id, name) VALUES (3, 'likeViewedByCastingDirector');
+INSERT INTO cast_me.statuses (id, name) VALUES (4, 'completed');
+INSERT INTO cast_me.statuses (id, name) VALUES (5, 'selftapeViewed');
+
 INSERT INTO cast_me.casting_directors (id, user_id) VALUES (1, 2);
 INSERT INTO cast_me.actors (id, education, agency_id, feature_set_id, user_id) VALUES (1, 'National Academy of Dramatic Arts', null, 1, 5);
 INSERT INTO cast_me.actors (id, education, agency_id, feature_set_id, user_id) VALUES (2, 'National Academy of Dramatic Arts', null, 2, 1);
