@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "80:8080"
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
@@ -17,12 +15,13 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: coderslab
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       MYSQL_DATABASE: cast_me
     ports:
-      - "3310:3306"
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
 
 volumes:
   mysql_data:
