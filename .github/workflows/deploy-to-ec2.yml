@@ -1,0 +1,38 @@
+name: Deploy to EC2 on develop merge
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (for completeness, not used here)
+        uses: actions/checkout@v4
+
+      - name: Connect and Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /srv/app
+            git reset --hard
+            git pull origin develop
+
+            echo "Stopping previous containers"
+            docker compose down
+
+            echo "Rebuilding images"
+            docker compose build
+
+            echo "Starting containers"
+            docker compose up -d --remove-orphans
+
+            echo "Deployment complete!"
